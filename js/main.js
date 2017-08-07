@@ -39,7 +39,7 @@ var create = function(){
   Fighter.keyboard = Fighter.game.input.keyboard;
 
   //Fighter.background = Fighter.game.add.sprite(0, 0, 'background');
-  Fighter.game.stage.backgroundColor = '#182d3b';
+  Fighter.game.stage.backgroundColor = '#808080';
 
   Fighter.countTime = 0;
   Fighter.timeScore = Fighter.game.add.text(
