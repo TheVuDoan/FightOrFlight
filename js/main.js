@@ -29,8 +29,8 @@ var preload = function(){
 
   Fighter.game.time.advancedTiming = true;
 
-  //Fighter.game.load.atlasJSONHash('assets', 'Assets/assets.png', 'Assets/assets.json');
-  //Fighter.game.load.image('background', 'Assets/Map1.png');
+  Fighter.game.load.atlasJSONHash('assets', 'Assets/assets.png', 'Assets/assets.json');
+  Fighter.game.load.image('background', 'Assets/Map1.png');
 }
 
 // initialize the game
