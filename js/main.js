@@ -1,6 +1,6 @@
 var Fighter = {};
 Fighter.configs = {
-  GAME_WIDTH: 640,
+  GAME_WIDTH: 1600,
   GAME_HEIGHT: 960,
 };
 
@@ -30,7 +30,7 @@ var preload = function(){
   Fighter.game.time.advancedTiming = true;
 
   Fighter.game.load.atlasJSONHash('assets', 'Assets/assets.png', 'Assets/assets.json');
-  Fighter.game.load.image('background', 'Assets/Map1.png');
+  Fighter.game.load.image('background', 'Assets/Background.png');
 }
 
 // initialize the game
@@ -38,9 +38,30 @@ var create = function(){
   Fighter.game.physics.startSystem(Phaser.Physics.ARCADE);
   Fighter.keyboard = Fighter.game.input.keyboard;
 
-  //Fighter.background = Fighter.game.add.sprite(0, -960, 'background');
+  //Fighter.background = Fighter.game.add.sprite(0, 0, 'background');
+  Fighter.game.stage.backgroundColor = '#182d3b';
+
+  Fighter.countTime = 0;
+  Fighter.timeScore = Fighter.game.add.text(
+        90, 18, Fighter.countTime,
+        { font: '34px Arial', fill: 'black', wordWrap: true, wordWrapWidth: 50 }
+    );
+    updateTimeText();
+  Fighter.timer = Fighter.game.time.events;
+  Fighter.timer.loop(Phaser.Timer.SECOND, updateCounter, this);
+}
+
+var updateTimeText = function() {
+  let pad2 = (number) => (number < 10 ? '0' : '') + number;
+  Fighter.timeScore.setText(Math.floor(Fighter.countTime / 60) + ":" + pad2(Fighter.countTime % 60));
+}
+
+var updateCounter = function() {
+  Fighter.countTime++;
+  updateTimeText();
 }
 
 var update = function() {}
 
-var render = function() {}
+var render = function() {
+}
