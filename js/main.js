@@ -2,6 +2,8 @@ var Fighter = {};
 Fighter.configs = {
   GAME_WIDTH: 1600,
   GAME_HEIGHT: 960,
+  PLAYER1_STARTX: 500,
+  PLAYER1_STARTY: 500
 };
 
 window.onload = function(){
@@ -49,6 +51,22 @@ var create = function(){
     updateTimeText();
   Fighter.timer = Fighter.game.time.events;
   Fighter.timer.loop(Phaser.Timer.SECOND, updateCounter, this);
+
+  Fighter.playerGroup = Fighter.game.add.physicsGroup();
+  Fighter.players = [];
+  Fighter.players.push(
+    new ShipType1Controller(
+      Fighter.configs.PLAYER1_STARTX,
+      Fighter.configs.PLAYER1_STARTY,
+      '-Player',
+      {
+        up : Phaser.Keyboard.UP,
+        down : Phaser.Keyboard.DOWN,
+        left : Phaser.Keyboard.LEFT,
+        right : Phaser.Keyboard.RIGHT,
+      }
+    )
+  );
 }
 
 var updateTimeText = function() {
