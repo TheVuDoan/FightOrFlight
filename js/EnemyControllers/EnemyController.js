@@ -28,7 +28,7 @@ class EnemyController {
         	this.sprite.body.velocity.x = Math.cos(this.targetAngle) * this.SPEED;
     		this.sprite.body.velocity.y = Math.sin(this.targetAngle) * this.SPEED;
       		if(this.targetAngle == 0) this.sprite.kill();
-
+}
 		update(){
 
 		
