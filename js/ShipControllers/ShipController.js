@@ -6,7 +6,10 @@ class ShipController{
 
     this.configs = configs;
     this.configs.SHIP_SPEED = 500;
+    
 
+
+    
     this.sprite.update = this.update.bind(this);
   }
 

@@ -9,6 +9,7 @@ class ShipType1Controller extends ShipController{
 
     this.configs.SHIP_SPEED = 500;
     this.configs.BULLET_TIME = 300;
+    this.sprite.shield = 0;
   }
 
   fire(){

@@ -4,7 +4,9 @@ Fighter.configs = {
   GAME_WIDTH: 1600,
   GAME_HEIGHT: 960,
   PLAYER1_STARTX: 500,
-  PLAYER1_STARTY: 500
+  PLAYER1_STARTY: 500,
+  ENEMY1_STARTX : 500,
+  ENEMY1_STARTY : 100
 };
 
 window.onload = function() {
