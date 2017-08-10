@@ -11,7 +11,9 @@ var loadState = {
     // Load animation explosion, khien 
     Fighter.game.load.spritesheet('explosion', 'Assets/bomb.png', 128, 128);
     Fighter.game.load.image('shield','Assets/Original Sprites/Shield.png');
-
+    Fighter.game.load.image('Player','../../Assets/Original Sprites/player.png');
+    Fighter.game.load.image('playerBound','../../Assets/Original Sprites/playerBound.png');
+    Fighter.game.load.image('Enemy','../../Assets/Original Sprites/enemy.png');
   },
 
   create: function() {

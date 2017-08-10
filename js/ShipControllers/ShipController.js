@@ -1,13 +1,12 @@
 class ShipController{
   constructor(x, y, spriteName,configs){
-    this.sprite = Fighter.playerGroup.create(x, y, "assets", spriteName);
+    this.sprite = Fighter.playerGroup.create(x, y, spriteName);
     this.sprite.body.collideWorldBounds = true;
     this.sprite.anchor = new Phaser.Point(0.5, 0.5);
 
     this.configs = configs;
     this.configs.SHIP_SPEED = 500;
-    
-
+    this.sprite.shield = 0;
 
     
     this.sprite.update = this.update.bind(this);
@@ -33,6 +32,8 @@ class ShipController{
     else {
       this.sprite.body.velocity.y = 0;
     }
+
+    
   }
 }
 

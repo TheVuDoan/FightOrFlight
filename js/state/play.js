@@ -1,15 +1,10 @@
 var SPEED = 300;
 var timeEnemy = 0;
+var timeColli = 0;
+
 var playState = {
   create: function() {
-  		for( var i = 1; i < 5; i++){
-			setTimeout(function() {
-			SPEED += 50;
-			}, i*1000);
-		}
-
-    //Fighter.background = Fighter.game.add.sprite(0, 0, 'background');
-      Fighter.game.stage.backgroundColor = '#808080';
+      Fighter.game.stage.backgroundColor = '9631ba';
       Fighter.countTime = 0;
       Fighter.timeScore = Fighter.game.add.text(
           90, 18, Fighter.countTime,
@@ -31,17 +26,18 @@ var playState = {
       Fighter.timer.loop(Phaser.Timer.SECOND, updateCounter, this);
 
 
-      // Tao player
+      
       Fighter.playerGroup = Fighter.game.add.physicsGroup();
       Fighter.enemyGroup = Fighter.game.add.physicsGroup();
       Fighter.giftGroup = Fighter.game.add.physicsGroup();
 
+      // Tao player
       Fighter.player = [];
       Fighter.player.push(
-        new ShipType1Controller(
+        new ShipController(
           Fighter.configs.PLAYER1_STARTX,
           Fighter.configs.PLAYER1_STARTY,
-          '-Player',
+          'Player',
           {
             up : Phaser.Keyboard.UP,
             down: Phaser.Keyboard.DOWN,
@@ -51,7 +47,20 @@ var playState = {
           }
         )
       );
+      Fighter.playerGroup.forEach(function(m){
+      		//Fighter.bound = m.addChild(Fighter.game.make.sprite(0, 0,'playerBound'));
+      		//Fighter.bound.anchor.setTo(0.5, 0.5);
+      });
+
+      // Tao Enemy
       Fighter.enemies = [];
+      // thiet lap 5 lan tang toc cho enemy
+      for( var i = 1; i < 5; i++){
+        setTimeout(function() {
+        SPEED += 100;
+        }, i*5000);
+      }
+
       Fighter.gift = [];
       for(var i = 1 ; i < 5; i++){
       		setTimeout(function(){
@@ -69,6 +78,9 @@ var playState = {
 
 	
     update: function(){
+		Fighter.game.physics.arcade.collide(Fighter.shield, Fighter.enemyGroup, collisionHandler, processHandler, this);
+      // va cham cac enemy vs nhau
+    	Fighter.game.physics.arcade.collide(Fighter.enemyGroup);
       // va cham player vs enemy
         Fighter.game.physics.arcade.overlap(
         Fighter.playerGroup,
@@ -82,6 +94,7 @@ var playState = {
         getShield
       );
 
+           	
         if(Fighter.game.time.now > timeEnemy ){
         	timeEnemy = Fighter.game.time.now + 300;
         	createEnemy();
@@ -98,7 +111,7 @@ var playState = {
         	else y -= 900;
 
 		      Fighter.enemies.push(
-		        new EnemyType1Controller(
+		        new EnemyController(
 		          x,
 		          y,
 		          'Enemy',
@@ -119,31 +132,24 @@ var playState = {
       explosion.animations.play('boom');
   };
 
-var timeColli = 0;
+
 var getCollie = function(playerSprite, enemySprite){    
-    if(timeColli < Fighter.game.time.time){
       if(playerSprite.shield == 0){
-      getExplosion(playerSprite.x, playerSprite.y);
-      playerSprite.kill();
-      timeColli = Fighter.game.time.time + 100;
-      }else{
-      getExplosion(enemySprite.x, enemySprite.y);
-        enemySprite.kill();
-        timeColli = Fighter.game.time.time + 100;
+	      getExplosion(playerSprite.x, playerSprite.y);
+	      playerSprite.kill();
       }
-    }
   }
+
+
+
   var myShield;
   var getShield = function (playerSprite, giftSprite){
-      giftSprite.kill();
-
-      
+      giftSprite.kill();      
       if(playerSprite.shield == 1) {
         Fighter.shield.kill();
         clearTimeout(myShield);
       }
-        else playerSprite.shield = 1;
-      
+       else playerSprite.shield = 1;
       Fighter.shield = Fighter.game.add.sprite(playerSprite.x,playerSprite.y, 'shield');
       Fighter.shield.anchor.setTo(0.5, 0.5);
       setInterval(function(){
@@ -151,9 +157,18 @@ var getCollie = function(playerSprite, enemySprite){
         Fighter.shield.y = playerSprite.y;
       }, 0);
 
-
+      Fighter.game.physics.arcade.enable(Fighter.shield);
       myShield = setTimeout(function(){
         Fighter.shield.kill();
         playerSprite.shield = 0;
       }, 10000);
   }
+
+var processHandler = function(player, veg) {
+    return true;
+}
+var collisionHandler = function(player, veg) {
+ 		player.anchor.setTo(0.5, 0.5);
+        veg.kill();
+        getExplosion(veg.x,veg.y);
+}
