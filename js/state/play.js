@@ -1,4 +1,4 @@
-var SPEED = 300;
+var SPEED = 300; //toc do ban dau cua enemy
 var timeEnemy = 0;
 var timeColli = 0;
 
@@ -29,7 +29,9 @@ var playState = {
       
       Fighter.playerGroup = Fighter.game.add.physicsGroup();
       Fighter.enemyGroup = Fighter.game.add.physicsGroup();
-      Fighter.giftGroup = Fighter.game.add.physicsGroup();
+      Fighter.gift1Group = Fighter.game.add.physicsGroup();
+      Fighter.gift2Group = Fighter.game.add.physicsGroup();
+      Fighter.gift3Group = Fighter.game.add.physicsGroup();
 
       // Tao player
       Fighter.player = [];
@@ -47,10 +49,6 @@ var playState = {
           }
         )
       );
-      Fighter.playerGroup.forEach(function(m){
-      		//Fighter.bound = m.addChild(Fighter.game.make.sprite(0, 0,'playerBound'));
-      		//Fighter.bound.anchor.setTo(0.5, 0.5);
-      });
 
       // Tao Enemy
       Fighter.enemies = [];
@@ -61,23 +59,65 @@ var playState = {
         }, i*5000);
       }
 
-      Fighter.gift = [];
-      for(var i = 1 ; i < 5; i++){
+
+
+      // random giap
+      Fighter.gift1 = [];
+      for(var i = 1 ; i < 3; i++){
+      		let x,y;
+        	x = Math.floor(Math.random() * 1600) + 50;
+        	y = Math.floor(Math.random() * 900) + 50;
       		setTimeout(function(){
-		        Fighter.gift.push(
-		            new GiftController(
-		              500 ,
-		              50 ,
-		            'CollectibleStar.png',
+		        Fighter.gift1.push(
+		            new GiftType1Controller(
+		              x ,
+		              y ,
+		            'shieldGift',
+		            {}
+		          )
+		        );
+		      }, i * 10000);
+      }
+
+      // random speed up
+      Fighter.gift2 = [];
+      for(var i = 1 ; i < 3; i++){
+      		let x,y;
+        	x = Math.floor(Math.random() * 1600) + 50;
+        	y = Math.floor(Math.random() * 900) + 50;
+      		setTimeout(function(){
+		        Fighter.gift2.push(
+		            new GiftType2Controller(
+		              x ,
+		              y ,
+		            'speedGift',
 		            {}
 		          )
 		        );
 		      }, i * 3000);
       }
+
+      Fighter.gift3 = [];
+      for(var i = 1 ; i < 4; i++){
+          let x,y;
+          x = Math.floor(Math.random() * 1600) + 50;
+          y = Math.floor(Math.random() * 900) + 50;
+          setTimeout(function(){
+            Fighter.gift3.push(
+                new GiftType3Controller(
+                  x ,
+                  y ,
+                'killGift',
+                {}
+              )
+            );
+          }, i * 4000);
+      }
     },
 
 	
     update: function(){
+      // va cham shield va enemy
 		Fighter.game.physics.arcade.collide(Fighter.shield, Fighter.enemyGroup, collisionHandler, processHandler, this);
       // va cham cac enemy vs nhau
     	Fighter.game.physics.arcade.collide(Fighter.enemyGroup);
@@ -87,16 +127,32 @@ var playState = {
         Fighter.enemyGroup,
         getCollie
       );
+
+
         // an duoc giap
         Fighter.game.physics.arcade.overlap(
         Fighter.playerGroup,
-        Fighter.giftGroup,
+        Fighter.gift1Group,
         getShield
       );
 
+
+        // tang toc do
+        Fighter.game.physics.arcade.overlap(
+        Fighter.playerGroup,
+        Fighter.gift2Group,
+        speedUp
+      );
+
+        // kill all
+        Fighter.game.physics.arcade.overlap(
+        Fighter.playerGroup,
+        Fighter.gift3Group,
+        killAll
+      );
            	
         if(Fighter.game.time.now > timeEnemy ){
-        	timeEnemy = Fighter.game.time.now + 300;
+        	timeEnemy = Fighter.game.time.now + 200;
         	createEnemy();
 	    }
     }
@@ -109,7 +165,6 @@ var playState = {
         	else x -= 900;
         	if(y > 900) y += 900;
         	else y -= 900;
-
 		      Fighter.enemies.push(
 		        new EnemyController(
 		          x,
@@ -143,8 +198,8 @@ var getCollie = function(playerSprite, enemySprite){
 
 
   var myShield;
-  var getShield = function (playerSprite, giftSprite){
-      giftSprite.kill();      
+  var getShield = function (playerSprite, gift1Sprite){
+      gift1Sprite.kill();      
       if(playerSprite.shield == 1) {
         Fighter.shield.kill();
         clearTimeout(myShield);
@@ -164,11 +219,22 @@ var getCollie = function(playerSprite, enemySprite){
       }, 10000);
   }
 
+
+var speedUp = function(playerSprite, gift2Sprite){
+	   playerSprite.SHIP_SPEED += 50;
+     gift2Sprite.kill();
+}
+var killAll = function(playerSprite, gift3Sprite){
+    gift3Sprite.kill();
+    Fighter.enemyGroup.forEach(function(m){
+      getExplosion(m.x,m.y);
+      m.kill();
+    });
+}
 var processHandler = function(player, veg) {
     return true;
 }
 var collisionHandler = function(player, veg) {
- 		player.anchor.setTo(0.5, 0.5);
         veg.kill();
         getExplosion(veg.x,veg.y);
 }
