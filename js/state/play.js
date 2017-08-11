@@ -6,12 +6,19 @@ var myShield;
 var playState = {
   create: function() {
       Fighter.game.stage.backgroundColor = '808080';
+      // game score
+      Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
+      Fighter.score = 0;
+      Fighter.frame = 0;
+      Fighter.playerDie = false;
+      Fighter.displayingText = Fighter.game.add.text( 1300, 30, "Score: " + Fighter.score, Fighter.style);
+
       //game time
       Fighter.countTime = 0;
       Fighter.timeScore = Fighter.game.add.text(
           90, 30, Fighter.countTime,
           { font: '34px Arial', fill: 'black', wordWrap: true, wordWrapWidth: 50 }
-        );
+      );
 
       var updateTimeText = function() {
         let pad2 = (number) => (number < 10 ? '0' : '') + number;
@@ -19,19 +26,15 @@ var playState = {
       }
 
       var updateCounter = function() {
-        Fighter.countTime++;
-        updateTimeText();
+        if(!Fighter.playerDie) {
+          Fighter.countTime++;
+          updateTimeText();
+        }
       }
 
       updateTimeText();
       Fighter.timer = Fighter.game.time.events;
       Fighter.timer.loop(Phaser.Timer.SECOND, updateCounter, this);
-      // game score
-      Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
-      Fighter.score = 0;
-      Fighter.frame = 0;
-      Fighter.playerDie = false;
-      Fighter.displayingText = Fighter.game.add.text( 1300, 30, "Score: " + Fighter.score, Fighter.style);
 
       Fighter.playerGroup = Fighter.game.add.physicsGroup();
       Fighter.enemyGroup = Fighter.game.add.physicsGroup();
