@@ -15,6 +15,9 @@ var loadState = {
     Fighter.game.load.image('playerBound','Assets/playerBound.png');
     Fighter.game.load.image('Enemy','Assets/enemy.png');
 
+    Fighter.game.load.image('gameover', 'Assets/gameover.png');
+    Fighter.game.load.image('replay', 'Assets/replay.png');
+
     Fighter.game.load.image('speedGift','Assets/speedGift.png');
     Fighter.game.load.image('shieldGift','Assets/shieldGift.png');
     Fighter.game.load.image('killGift','Assets/killGift.png');

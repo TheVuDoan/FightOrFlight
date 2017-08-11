@@ -2,6 +2,7 @@ var SPEED = 300; //toc do ban dau cua enemy
 var timeEnemy = 0;
 var timeColli = 0;
 var shield = 0;
+var myShield;
 var playState = {
   create: function() {
       Fighter.game.stage.backgroundColor = '808080';
@@ -10,7 +11,7 @@ var playState = {
       Fighter.timeScore = Fighter.game.add.text(
           90, 30, Fighter.countTime,
           { font: '34px Arial', fill: 'black', wordWrap: true, wordWrapWidth: 50 }
-      );
+        );
 
       var updateTimeText = function() {
         let pad2 = (number) => (number < 10 ? '0' : '') + number;
@@ -25,13 +26,12 @@ var playState = {
       updateTimeText();
       Fighter.timer = Fighter.game.time.events;
       Fighter.timer.loop(Phaser.Timer.SECOND, updateCounter, this);
-
       // game score
       Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
       Fighter.score = 0;
       Fighter.frame = 0;
-      Fighter.displayingText = Fighter.game.add.text( 1300, 30, "Score: " + Fighter.score, Fighter.style);
       Fighter.playerDie = false;
+      Fighter.displayingText = Fighter.game.add.text( 1300, 30, "Score: " + Fighter.score, Fighter.style);
 
       Fighter.playerGroup = Fighter.game.add.physicsGroup();
       Fighter.enemyGroup = Fighter.game.add.physicsGroup();
@@ -87,6 +87,14 @@ var playState = {
             )
           );
       }, z2 * 1000);
+    },
+
+    replay:function() {
+      Fighter.game.state.start('play');
+    },
+
+    pause:function() {
+      Fighter.game.paused = !Fighter.game.paused;
     },
 
     update: function(){
@@ -181,6 +189,23 @@ var getCollie = function(playerSprite, enemySprite){
       if(shield == 0){
 	      getExplosion(playerSprite.x, playerSprite.y);
 	      playerSprite.kill();
+        // GAMEOVER
+
+        Fighter.playerDie = true;
+        var gameover = Fighter.game.add.image(550, 150, 'gameover');
+        gameover.width = 500;
+        gameover.height = 350;
+
+        if(localStorage.getItem("highscore") < Fighter.score){
+          localStorage.setItem("highscore", Fighter.score);
+        }
+        var score = Fighter.game.add.text(700,550, 'Score: ' + Fighter.score,{font: "bold 50px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
+        var highscore = Fighter.game.add.text(650,650, 'Highscore:' + localStorage.getItem("highscore"),{font: "bold 50px Arial", fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+
+        var replay = Fighter.game.add.button(700, 750, 'replay', playState.replay, this);
+        replay.width = 200;
+        replay.height = 200;
+        Fighter.game.paused;
       }
 }
 
@@ -212,12 +237,6 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
           Fighter.score += 1;
         });
       }
-}
-
-var myShield;
-var speedUp = function(playerSprite, giftSprite){
-	   playerSprite.SHIP_SPEED += 50;
-     giftSprite.kill();
 }
 
 var checkOverlap = function(spriteA, spriteB) {
