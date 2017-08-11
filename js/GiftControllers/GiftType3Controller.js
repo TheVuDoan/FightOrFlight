@@ -1,10 +1,7 @@
-class GiftType3Controller {
+class GiftType3Controller extends GiftController{
     constructor(x, y, spriteName, configs){
-      this.sprite = Fighter.gift3Group.create(x, y, spriteName);
-      Fighter.game.physics.arcade.enable(this.sprite);
-
-
-      this.sprite.anchor = new Phaser.Point(0.5, 0.5);
+      super(x,y,'killGift',configs);
+      this.sprite.giftType = "Mega Blast";
       this.configs = configs;
 
       this.sprite.update = this.update.bind(this);

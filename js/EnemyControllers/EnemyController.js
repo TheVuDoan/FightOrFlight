@@ -6,13 +6,13 @@ class EnemyController {
   this.worldbounds = 0;
 	this.configs = configs;
 	this.SPEED = SPEED;
-    
+
   var a,b;
-  Fighter.playerGroup.forEach(function(m){			
+  Fighter.playerGroup.forEach(function(m){
     	a = m.x;
-    	b = m.y;				
+    	b = m.y;
   });
-   	 
+
 	this.targetAngle = Fighter.game.math.angleBetween(
       this.sprite.position.x,
       this.sprite.position.y,
@@ -30,6 +30,6 @@ class EnemyController {
       getExplosion(this.sprite.x, this.sprite.y);
       this.sprite.kill();
     }
+		this.sprite.angle += 2;
   }
 }
-

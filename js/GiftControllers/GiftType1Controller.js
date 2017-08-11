@@ -1,15 +1,9 @@
-class GiftType1Controller {
-    constructor(x, y, spriteName, configs){
-      this.sprite = Fighter.gift1Group.create(x, y, spriteName);
-      Fighter.game.physics.arcade.enable(this.sprite);
-      
-
-      this.sprite.anchor = new Phaser.Point(0.5, 0.5);
+class GiftType1Controller extends GiftController {
+    constructor(x, y, configs){
+      super(x,y,'shieldGift',configs);
       this.configs = configs;
-      
+      this.sprite.giftType = "Shield";
       this.sprite.update = this.update.bind(this);
     }
-    update(){
-
-    }
+    update(){}
 }

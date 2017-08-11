@@ -1,14 +1,14 @@
 var SPEED = 300; //toc do ban dau cua enemy
 var timeEnemy = 0;
 var timeColli = 0;
-
+var shield = 0;
 var playState = {
   create: function() {
       Fighter.game.stage.backgroundColor = '808080';
       //game time
       Fighter.countTime = 0;
       Fighter.timeScore = Fighter.game.add.text(
-          90, 18, Fighter.countTime,
+          90, 30, Fighter.countTime,
           { font: '34px Arial', fill: 'black', wordWrap: true, wordWrapWidth: 50 }
       );
 
@@ -35,9 +35,9 @@ var playState = {
 
       Fighter.playerGroup = Fighter.game.add.physicsGroup();
       Fighter.enemyGroup = Fighter.game.add.physicsGroup();
-      Fighter.gift1Group = Fighter.game.add.physicsGroup();
-      Fighter.gift2Group = Fighter.game.add.physicsGroup();
-      Fighter.gift3Group = Fighter.game.add.physicsGroup();
+      Fighter.giftGroup = Fighter.game.add.physicsGroup();
+      //Fighter.gift2Group = Fighter.game.add.physicsGroup();
+      //Fighter.gift3Group = Fighter.game.add.physicsGroup();
 
       // Generate player
       Fighter.player = [];
@@ -60,56 +60,35 @@ var playState = {
       }
 
       // random giap
-      Fighter.gift1 = [];
-      for(var i = 1 ; i < 3; i++){
+      Fighter.gift = [];
+      for(let i = 0 ; i < 3; i++){
       		let x,y;
         	x = Math.floor(Math.random() * 1600) + 50;
         	y = Math.floor(Math.random() * 900) + 50;
       		setTimeout(function(){
-		        Fighter.gift1.push(
+		        Fighter.gift.push(
 		            new GiftType1Controller(
 		              x ,
 		              y ,
-		            'shieldGift',
 		            {}
 		          )
 		        );
-		      }, i * 10000);
+		      }, i * 20000);
       }
-
-      // random speed up
-      Fighter.gift2 = [];
-      for(var i = 1 ; i < 3; i++){
-      		let x,y;
-        	x = Math.floor(Math.random() * 1600) + 50;
-        	y = Math.floor(Math.random() * 900) + 50;
-      		setTimeout(function(){
-		        Fighter.gift2.push(
-		            new GiftType2Controller(
-		              x ,
-		              y ,
-		            'speedGift',
-		            {}
-		          )
-		        );
-		      }, i * 3000);
-      }
-
-      Fighter.gift3 = [];
-      for(var i = 1 ; i < 4; i++){
+      //random Mega Blast
+      for(let i = 0 ; i < 4; i++){
           let x,y;
           x = Math.floor(Math.random() * 1600) + 50;
           y = Math.floor(Math.random() * 900) + 50;
           setTimeout(function(){
-            Fighter.gift3.push(
+            Fighter.gift.push(
                 new GiftType3Controller(
                   x ,
                   y ,
-                'killGift',
                 {}
               )
             );
-          }, i * 4000);
+          }, i * 30000 + 10000);
       }
     },
 
@@ -141,45 +120,38 @@ var playState = {
             Fighter.game.state.start('win');
         }
       // va cham shield va enemy
-		    Fighter.game.physics.arcade.collide(Fighter.shield, Fighter.enemyGroup, collisionHandler, processHandler, this);
+        if(shield == 1){
+          Fighter.enemyGroup.forEach(function(enemy){
+            if(checkOverlap(enemy, Fighter.shield) && enemy.alive){
+              getExplosion(enemy.x,enemy.y);
+              enemy.kill();
+              Fighter.score += 1;
+            }
+          });
+        }
       // va cham cac enemy vs nhau
-    	   Fighter.game.physics.arcade.collide(Fighter.enemyGroup);
+    	  Fighter.game.physics.arcade.collide(Fighter.enemyGroup);
       // va cham player vs enemy
         Fighter.game.physics.arcade.overlap(
-        Fighter.playerGroup,
-        Fighter.enemyGroup,
-        getCollie
-      );
+          Fighter.playerGroup,
+          Fighter.enemyGroup,
+          getCollie
+        );
 
-        // an duoc giap
         Fighter.game.physics.arcade.overlap(
-        Fighter.playerGroup,
-        Fighter.gift1Group,
-        getShield
-      );
-
-        // tang toc do
-        Fighter.game.physics.arcade.overlap(
-        Fighter.playerGroup,
-        Fighter.gift2Group,
-        speedUp
-      );
-
-        // kill all
-        Fighter.game.physics.arcade.overlap(
-        Fighter.playerGroup,
-        Fighter.gift3Group,
-        killAll
-      );
+          Fighter.playerGroup,
+          Fighter.giftGroup,
+          onPlayerGetGift
+        );
 
         if(Fighter.game.time.now > timeEnemy ){
-        	timeEnemy = Fighter.game.time.now + 200;
-        	createEnemy();
-	    }
+          timeEnemy = Fighter.game.time.now + 200;
+          createEnemy();
+	       }
     }
 }
 
-  var createEnemy = function(){
+var createEnemy = function(){
   		var x,y;
         	x = Math.floor(Math.random() * 1800) ;
         	y = Math.floor(Math.random() * 1800) ;
@@ -195,9 +167,9 @@ var playState = {
 		          {}
 		        )
 		      );
-  }
+}
 
-  var getExplosion = function(x, y) {
+var getExplosion = function(x, y) {
       explosion = Fighter.game.add.sprite(0, 0, 'explosion');
       explosion.anchor.setTo(0.5, 0.5);
       var animation = explosion.animations.add('boom', [0,1,2,3], 60, false);
@@ -207,56 +179,53 @@ var playState = {
       explosion.y = y;
 
       explosion.animations.play('boom');
-  };
-
+}
 
 var getCollie = function(playerSprite, enemySprite){
       if(playerSprite.shield == 0){
 	      getExplosion(playerSprite.x, playerSprite.y);
 	      playerSprite.kill();
       }
-  }
+}
 
+var onPlayerGetGift = function(playerSprite, giftSprite) {
+      if (giftSprite.giftType == "Shield") {
+        //getShield(playerSprite,giftSprite);
+        giftSprite.kill();
+        if(shield == 1) {
+          Fighter.shield.kill();
+          clearTimeout(myShield);
+        }
+        else shield = 1;
+        Fighter.shield = playerSprite.addChild(Fighter.game.add.sprite(0, 0, 'shield'));
+        Fighter.shield.anchor.setTo(0.5, 0.5);
 
-
-  var myShield;
-  var getShield = function (playerSprite, gift1Sprite){
-      gift1Sprite.kill();
-      if(playerSprite.shield == 1) {
-        Fighter.shield.kill();
-        clearTimeout(myShield);
+        Fighter.game.physics.arcade.enable(Fighter.shield);
+        myShield = setTimeout(function(){
+          Fighter.shield.kill();
+          shield = 0;
+        }, 10000);
       }
-       else playerSprite.shield = 1;
-      Fighter.shield = Fighter.game.add.sprite(playerSprite.x,playerSprite.y, 'shield');
-      Fighter.shield.anchor.setTo(0.5, 0.5);
-      setInterval(function(){
-        Fighter.shield.x = playerSprite.x;
-        Fighter.shield.y = playerSprite.y;
-      }, 0);
 
-      Fighter.game.physics.arcade.enable(Fighter.shield);
-      myShield = setTimeout(function(){
-        Fighter.shield.kill();
-        playerSprite.shield = 0;
-      }, 10000);
-  }
+      if (giftSprite.giftType == "Mega Blast") {
+        //killAll(playerSprite,giftSprite);
+        giftSprite.kill();
+        Fighter.enemyGroup.forEach(function(m){
+          getExplosion(m.x,m.y);
+          m.kill();
+          Fighter.score += 1;
+        });
+      }
+}
 
-
-var speedUp = function(playerSprite, gift2Sprite){
+var myShield;
+var speedUp = function(playerSprite, giftSprite){
 	   playerSprite.SHIP_SPEED += 50;
-     gift2Sprite.kill();
+     giftSprite.kill();
 }
-var killAll = function(playerSprite, gift3Sprite){
-    gift3Sprite.kill();
-    Fighter.enemyGroup.forEach(function(m){
-      getExplosion(m.x,m.y);
-      m.kill();
-    });
-}
-var processHandler = function(player, veg) {
-    return true;
-}
-var collisionHandler = function(player, veg) {
-        veg.kill();
-        getExplosion(veg.x,veg.y);
+
+var checkOverlap = function(spriteA, spriteB) {
+  var boundsA = spriteA.getBounds();
+  var boundsB = spriteB.getBounds();
+  return Phaser.Rectangle.intersects(boundsA, boundsB);
 }

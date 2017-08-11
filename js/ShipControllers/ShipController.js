@@ -7,8 +7,6 @@ class ShipController{
     this.configs = configs;
     this.sprite.shield = 0;
 
-    this.sprite.SHIP_SPEED = 400;
-
     this.sprite.update = this.update.bind(this);
   }
 
