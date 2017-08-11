@@ -36,8 +36,6 @@ var playState = {
       Fighter.playerGroup = Fighter.game.add.physicsGroup();
       Fighter.enemyGroup = Fighter.game.add.physicsGroup();
       Fighter.giftGroup = Fighter.game.add.physicsGroup();
-      //Fighter.gift2Group = Fighter.game.add.physicsGroup();
-      //Fighter.gift3Group = Fighter.game.add.physicsGroup();
 
       // Generate player
       Fighter.player = [];
@@ -61,37 +59,35 @@ var playState = {
 
       // random giap
       Fighter.gift = [];
-      for(let i = 0 ; i < 3; i++){
+      let z = Fighter.configs.SHIELD_DELAY;
+      setInterval(function(){
       		let x,y;
         	x = Math.floor(Math.random() * 1600) + 50;
         	y = Math.floor(Math.random() * 900) + 50;
-      		setTimeout(function(){
-		        Fighter.gift.push(
-		            new GiftType1Controller(
-		              x ,
-		              y ,
-		            {}
-		          )
-		        );
-		      }, i * 20000);
-      }
-      //random Mega Blast
-      for(let i = 0 ; i < 4; i++){
-          let x,y;
-          x = Math.floor(Math.random() * 1600) + 50;
-          y = Math.floor(Math.random() * 900) + 50;
-          setTimeout(function(){
-            Fighter.gift.push(
-                new GiftType3Controller(
-                  x ,
-                  y ,
-                {}
-              )
-            );
-          }, i * 30000 + 10000);
-      }
-    },
+		      Fighter.gift.push(
+		        new GiftType1Controller(
+		          x ,
+		          y ,
+		          {}
+		        )
+		      );
+		  }, z * 1000);
 
+      //random Mega Blast
+      let z2 = Fighter.configs.MEGA_DELAY;
+      setInterval(function(){
+          let x2,y2;
+          x2 = Math.floor(Math.random() * 1600) + 50;
+          y2 = Math.floor(Math.random() * 900) + 50;
+          Fighter.gift.push(
+            new GiftType3Controller(
+              x2 ,
+              y2 ,
+              {}
+            )
+          );
+      }, z2 * 1000);
+    },
 
     update: function(){
       // pause
@@ -182,7 +178,7 @@ var getExplosion = function(x, y) {
 }
 
 var getCollie = function(playerSprite, enemySprite){
-      if(playerSprite.shield == 0){
+      if(shield == 0){
 	      getExplosion(playerSprite.x, playerSprite.y);
 	      playerSprite.kill();
       }
@@ -204,7 +200,7 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
         myShield = setTimeout(function(){
           Fighter.shield.kill();
           shield = 0;
-        }, 10000);
+        }, 7000);
       }
 
       if (giftSprite.giftType == "Mega Blast") {

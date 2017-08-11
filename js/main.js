@@ -5,8 +5,8 @@ Fighter.configs = {
   GAME_HEIGHT: 960,
   PLAYER1_STARTX: 500,
   PLAYER1_STARTY: 500,
-  ENEMY1_STARTX : 500,
-  ENEMY1_STARTY : 100
+  SHIELD_DELAY: 15,
+  MEGA_DELAY: 25
 };
 
 window.onload = function() {
