@@ -5,6 +5,7 @@ var timeColli = 0;
 var playState = {
   create: function() {
       Fighter.game.stage.backgroundColor = '808080';
+      //game time
       Fighter.countTime = 0;
       Fighter.timeScore = Fighter.game.add.text(
           90, 18, Fighter.countTime,
@@ -25,8 +26,7 @@ var playState = {
       Fighter.timer = Fighter.game.time.events;
       Fighter.timer.loop(Phaser.Timer.SECOND, updateCounter, this);
 
-      // score
-
+      // game score
       Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
       Fighter.score = 0;
       Fighter.frame = 0;
@@ -39,24 +39,18 @@ var playState = {
       Fighter.gift2Group = Fighter.game.add.physicsGroup();
       Fighter.gift3Group = Fighter.game.add.physicsGroup();
 
-      // Tao player
+      // Generate player
       Fighter.player = [];
       Fighter.player.push(
         new ShipController(
           Fighter.configs.PLAYER1_STARTX,
           Fighter.configs.PLAYER1_STARTY,
           'Player',
-          {
-            up : Phaser.Keyboard.UP,
-            down: Phaser.Keyboard.DOWN,
-            left: Phaser.Keyboard.LEFT,
-            right: Phaser.Keyboard.RIGHT,
-            fire : Phaser.Keyboard.SPACEBAR
-          }
+          {}
         )
       );
 
-      // Tao Enemy
+      // Generate Enemy
       Fighter.enemies = [];
       // thiet lap 5 lan tang toc cho enemy
       for( var i = 1; i < 5; i++){
@@ -64,8 +58,6 @@ var playState = {
         SPEED += 100;
         }, i*5000);
       }
-
-
 
       // random giap
       Fighter.gift1 = [];
@@ -123,23 +115,19 @@ var playState = {
 
 
     update: function(){
-
-            // pause
-
-            window.onkeydown = function() {
-                  if (Fighter.game.input.keyboard.event.keyCode == 32){
-                      Fighter.game.paused = !Fighter.game.paused;
-                  }
-              }
-
-            // update score
-
-          if(!Fighter.playerDie){
+      // pause
+      window.onkeydown = function() {
+        if (Fighter.game.input.keyboard.event.keyCode == 32){
+          Fighter.game.paused = !Fighter.game.paused;
+        }
+      }
+      // update score
+        if(!Fighter.playerDie){
             Fighter.frame++;
             Fighter.score += (Fighter.frame % 60 === 0);
             Fighter.gameTime += (Fighter.frame % 60 === 0);
             Fighter.displayingText.setText("Score: " + Fighter.score);
-          }else {
+        } else {
             Fighter.displayingText.destroy();
 
             if(localStorage.getItem("highscore") === null){
@@ -151,11 +139,11 @@ var playState = {
 
             clearInterval(this.enemyInterval);
             Fighter.game.state.start('win');
-          }
+        }
       // va cham shield va enemy
-		Fighter.game.physics.arcade.collide(Fighter.shield, Fighter.enemyGroup, collisionHandler, processHandler, this);
+		    Fighter.game.physics.arcade.collide(Fighter.shield, Fighter.enemyGroup, collisionHandler, processHandler, this);
       // va cham cac enemy vs nhau
-    	Fighter.game.physics.arcade.collide(Fighter.enemyGroup);
+    	   Fighter.game.physics.arcade.collide(Fighter.enemyGroup);
       // va cham player vs enemy
         Fighter.game.physics.arcade.overlap(
         Fighter.playerGroup,
@@ -163,14 +151,12 @@ var playState = {
         getCollie
       );
 
-
         // an duoc giap
         Fighter.game.physics.arcade.overlap(
         Fighter.playerGroup,
         Fighter.gift1Group,
         getShield
       );
-
 
         // tang toc do
         Fighter.game.physics.arcade.overlap(
@@ -192,6 +178,7 @@ var playState = {
 	    }
     }
 }
+
   var createEnemy = function(){
   		var x,y;
         	x = Math.floor(Math.random() * 1800) ;
