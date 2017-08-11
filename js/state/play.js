@@ -4,7 +4,7 @@ var timeColli = 0;
 
 var playState = {
   create: function() {
-      Fighter.game.stage.backgroundColor = '9631ba';
+      Fighter.game.stage.backgroundColor = '808080';
       Fighter.countTime = 0;
       Fighter.timeScore = Fighter.game.add.text(
           90, 18, Fighter.countTime,
@@ -26,7 +26,7 @@ var playState = {
       Fighter.timer.loop(Phaser.Timer.SECOND, updateCounter, this);
 
 
-      
+
       Fighter.playerGroup = Fighter.game.add.physicsGroup();
       Fighter.enemyGroup = Fighter.game.add.physicsGroup();
       Fighter.gift1Group = Fighter.game.add.physicsGroup();
@@ -115,7 +115,7 @@ var playState = {
       }
     },
 
-	
+
     update: function(){
       // va cham shield va enemy
 		Fighter.game.physics.arcade.collide(Fighter.shield, Fighter.enemyGroup, collisionHandler, processHandler, this);
@@ -150,7 +150,7 @@ var playState = {
         Fighter.gift3Group,
         killAll
       );
-           	
+
         if(Fighter.game.time.now > timeEnemy ){
         	timeEnemy = Fighter.game.time.now + 200;
         	createEnemy();
@@ -183,12 +183,12 @@ var playState = {
 
       explosion.x = x;
       explosion.y = y;
- 
+
       explosion.animations.play('boom');
   };
 
 
-var getCollie = function(playerSprite, enemySprite){    
+var getCollie = function(playerSprite, enemySprite){
       if(playerSprite.shield == 0){
 	      getExplosion(playerSprite.x, playerSprite.y);
 	      playerSprite.kill();
@@ -199,7 +199,7 @@ var getCollie = function(playerSprite, enemySprite){
 
   var myShield;
   var getShield = function (playerSprite, gift1Sprite){
-      gift1Sprite.kill();      
+      gift1Sprite.kill();
       if(playerSprite.shield == 1) {
         Fighter.shield.kill();
         clearTimeout(myShield);
