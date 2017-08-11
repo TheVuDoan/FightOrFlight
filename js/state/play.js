@@ -25,7 +25,13 @@ var playState = {
       Fighter.timer = Fighter.game.time.events;
       Fighter.timer.loop(Phaser.Timer.SECOND, updateCounter, this);
 
+      // score
 
+      Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
+      Fighter.score = 0;
+      Fighter.frame = 0;
+      Fighter.displayingText = Fighter.game.add.text( 1300, 30, "Score: " + Fighter.score, Fighter.style);
+      Fighter.playerDie = false;
 
       Fighter.playerGroup = Fighter.game.add.physicsGroup();
       Fighter.enemyGroup = Fighter.game.add.physicsGroup();
@@ -117,6 +123,35 @@ var playState = {
 
 
     update: function(){
+
+            // pause
+
+            window.onkeydown = function() {
+                  if (Fighter.game.input.keyboard.event.keyCode == 32){
+                      Fighter.game.paused = !Fighter.game.paused;
+                  }
+              }
+
+            // update score
+
+          if(!Fighter.playerDie){
+            Fighter.frame++;
+            Fighter.score += (Fighter.frame % 60 === 0);
+            Fighter.gameTime += (Fighter.frame % 60 === 0);
+            Fighter.displayingText.setText("Score: " + Fighter.score);
+          }else {
+            Fighter.displayingText.destroy();
+
+            if(localStorage.getItem("highscore") === null){
+              localStorage.setItem("highscore", Fighter.score);
+            }
+            else if(localStorage.getItem("highscore") < Fighter.score){
+              localStorage.setItem("highscore", Fighter.score);
+            }
+
+            clearInterval(this.enemyInterval);
+            Fighter.game.state.start('win');
+          }
       // va cham shield va enemy
 		Fighter.game.physics.arcade.collide(Fighter.shield, Fighter.enemyGroup, collisionHandler, processHandler, this);
       // va cham cac enemy vs nhau
