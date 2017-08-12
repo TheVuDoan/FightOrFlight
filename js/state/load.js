@@ -6,6 +6,7 @@ var loadState = {
     Fighter.game.load.image('play', 'Assets/play.png');
     Fighter.game.load.image('howToPlay', 'Assets/howtoplay.png');
     Fighter.game.load.image('credit', 'Assets/credit.png');
+    Fighter.game.load.image('next', 'Assets/Next.png');
 
 
     // Load animation explosion, khien
@@ -27,6 +28,6 @@ var loadState = {
   },
 
   create: function() {
-    Fighter.game.state.start('menu');
+    Fighter.game.state.start('opening');
   }
 }

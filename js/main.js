@@ -21,6 +21,9 @@ window.onload = function() {
   Fighter.game.state.add('menu', menuState);
   Fighter.game.state.add('play', playState);
   Fighter.game.state.add('play2', play2State);
+  Fighter.game.state.add('opening', openingState);
+  Fighter.game.state.add('stage1Opening', stage1OpeningState);
+  Fighter.game.state.add('stage2Opening', stage2OpeningState);
   // Fighter.game.state.add('win', winState);
 
   Fighter.game.state.start('boot');

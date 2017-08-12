@@ -19,7 +19,7 @@ var menuState = {
     buttonCredit.width = 350;
   },
   onPlayClick: function() {
-      Fighter.game.state.start('play');
+      Fighter.game.state.start('stage1Opening');
   },
   onHowToPlayClick: function() {
       console.log("onHowToPlayClick");

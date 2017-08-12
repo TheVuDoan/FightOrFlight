@@ -142,7 +142,7 @@ var playState = {
 
         //Level up
         if(Fighter.countTime === 90 && !Fighter.playerDie) {
-          var levelup = Fighter.game.add.image(170, 200, 'levelup');
+          /*var levelup = Fighter.game.add.image(170, 200, 'levelup');
           setTimeout(function(){
             Fighter.game.paused = true;
             if(Fighter.game.paused) {
@@ -161,8 +161,8 @@ var playState = {
                 Fighter.game.state.start('play2');
               }, 5 * 1000);
             }
-          }, 1 * 1000);
-
+          }, 1 * 1000);*/
+          Fighter.game.state.start('stage2Opening');
         }
 
       // va cham shield va enemy
