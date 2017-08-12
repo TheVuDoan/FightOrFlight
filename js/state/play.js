@@ -141,27 +141,7 @@ var playState = {
         }
 
         //Level up
-        if(Fighter.countTime === 90 && !Fighter.playerDie) {
-          /*var levelup = Fighter.game.add.image(170, 200, 'levelup');
-          setTimeout(function(){
-            Fighter.game.paused = true;
-            if(Fighter.game.paused) {
-              setTimeout(function(){
-                var text = Fighter.game.add.text(1300, 850, 'LOADING .');
-              }, 2 * 1000);
-              setTimeout(function(){
-                var text = Fighter.game.add.text(1300, 850, 'LOADING . .');
-              }, 3 * 1000);
-              setTimeout(function(){
-                var text = Fighter.game.add.text(1300, 850, 'LOADING . . .');
-              }, 4 * 1000);
-
-              setTimeout(function(){
-                Fighter.game.paused = false;
-                Fighter.game.state.start('play2');
-              }, 5 * 1000);
-            }
-          }, 1 * 1000);*/
+        if(Fighter.countTime === 10 && !Fighter.playerDie) {
           Fighter.game.state.start('stage2Opening');
         }
 
