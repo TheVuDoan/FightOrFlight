@@ -2,10 +2,10 @@ var SPEED = 300; //toc do ban dau cua enemy
 var timeEnemy = 0;
 var timeColli = 0;
 var shield = 0;
-var myShield;
+var myShield,myTrans;
 var loop,loop1,loop2,loop3;
-var flash,fade;
-var transperant = false;
+var flash,fade,fade2,flash2,appear;
+var transperant = 0;
 var playState = {
   create: function() {
       Fighter.game.stage.backgroundColor = '808080';
@@ -281,19 +281,30 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
         fade = Fighter.game.time.events.add(Phaser.Timer.SECOND * 3, fadeSprite,this);
       }
 
-      if(giftSprite.giftType == "Transperant"){
+      if(giftSprite.giftType == "Transperant") {
          giftSprite.kill();
-         transperant = true;
-         Fighter.playerGroup.forEach(function(player){
-          player.alpha = 0.3;
-         },this);
-         Fighter.game.time.events.add(Phaser.Timer.SECOND * 5, function(){
-            Fighter.playerGroup.forEach(function(enemy){
-              enemy.alpha = 1;
-              transperant = false;
-            });
-         },this);
-      }
+         if(transperant == 1) {
+           Fighter.trans.kill();
+           clearTimeout(myTrans);
+           Fighter.game.time.events.remove(fade2);
+           Fighter.game.time.events.remove(flash2);
+         }
+         else transperant = 1;
+         var m = Fighter.playerGroup.getFirstAlive();
+
+         Fighter.trans = playerSprite.addChild(Fighter.game.add.sprite(0, 0, 'trans'));
+         Fighter.trans.alpha = 0.5;
+         m.alpha = 0.5;
+         Fighter.trans.anchor.setTo(0.5, 0.5);
+         myTrans = setTimeout(function(){
+           Fighter.trans.kill();
+           transperant = 0;
+           m.alpha = 1;
+         }, 5000);
+
+         Fighter.game.time.events.remove(flash2);
+         fade2 = Fighter.game.time.events.add(Phaser.Timer.SECOND * 3, fadeTransperant,this);
+       }
 
       if (giftSprite.giftType == "Mega Blast") {
         giftSprite.kill();
@@ -321,4 +332,13 @@ var fadeSprite = function() {
 	    Fighter.game.add.tween(Fighter.shield).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
 		}
 		,this);
+}
+
+var fadeTransperant = function(){
+	flash2 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 0.2,
+		function(){
+	    	Fighter.game.add.tween(Fighter.trans).to( { alpha: 0 }, 0, Phaser.Easing.Linear.None, true);
+	    	Fighter.game.add.tween(Fighter.trans).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
+		}
+	,this);
 }

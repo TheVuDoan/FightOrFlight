@@ -160,7 +160,7 @@ var play2State = {
       Fighter.game.physics.arcade.overlap(
         Fighter.playerGroup,
         Fighter.giftGroup,
-        onPlayerGetGift
+        onPlayerGetGift2
       );
 
       if(Fighter.game.time.now > timeEnemy ){
@@ -229,7 +229,7 @@ var getCollie2 = function(playerSprite, enemySprite){
       }
 }
 
-var onPlayerGetGift = function(playerSprite, giftSprite) {
+var onPlayerGetGift2 = function(playerSprite, giftSprite) {
       if (giftSprite.giftType == "Shield") {
         giftSprite.kill();
         if(shield == 1) {
