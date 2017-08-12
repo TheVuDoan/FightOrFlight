@@ -3,7 +3,7 @@ var timeEnemy = 0;
 var timeColli = 0;
 var shield = 0;
 var myShield;
-var loop1,loop2,loop3;
+var loop,loop1,loop2,loop3;
 var flash,fade;
 var transperant = false;
 var playState = {
@@ -57,7 +57,7 @@ var playState = {
       // Generate Enemy
       Fighter.enemies = [];
       // thiet lap 5 lan tang toc cho enemy
-      Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
+      loop = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
           SPEED += 90;
       },this);
 
@@ -208,6 +208,7 @@ var getCollie = function(playerSprite, enemySprite){
         // GAMEOVER
 
         SPEED = 300;
+        Fighter.game.time.events.remove(loop);
         Fighter.game.time.events.remove(loop1);
         Fighter.game.time.events.remove(loop2);
         Fighter.game.time.events.remove(loop3);
