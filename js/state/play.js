@@ -3,7 +3,7 @@ var timeEnemy = 0;
 var timeColli = 0;
 var shield = 0;
 var myShield,myTrans;
-var loop,loop1,loop2,loop3;
+var loop,loop1,loop2,loop3,loop4;
 var flash,fade,fade2,flash2,appear;
 var transperant = 0;
 var playState = {
@@ -59,7 +59,7 @@ var playState = {
       Fighter.enemies = [];
       // thiet lap 5 lan tang toc cho enemy
       loop = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
-          SPEED += 100;
+          SPEED += 90;
       },this);
 
       Fighter.gift = [];
@@ -89,13 +89,26 @@ var playState = {
             )
           );
       }, this);
-      //Megablast
-      loop3 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 45, function(){
+      //Blast
+      loop3 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 25, function(){
           let x,y;
           x = Math.floor(Math.random() * 1600) + 50;
           y = Math.floor(Math.random() * 900) + 50;
           Fighter.gift.push(
-            new GiftType3Controller(
+            new GiftType4Controller(
+              x ,
+              y ,
+              {}
+            )
+          );
+      }, this);
+      //star
+      loop4 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
+          let x,y;
+          x = Math.floor(Math.random() * 1600) + 50;
+          y = Math.floor(Math.random() * 900) + 50;
+          Fighter.gift.push(
+            new GiftType5Controller(
               x ,
               y ,
               {}
@@ -169,7 +182,7 @@ var playState = {
         );
 
         if(Fighter.game.time.now > timeEnemy && Fighter.countTime <= 85){
-          timeEnemy = Fighter.game.time.now + 200;
+          timeEnemy = Fighter.game.time.now + 250;
           createEnemy1();
 	       }
 
@@ -220,6 +233,7 @@ var getCollie = function(playerSprite, enemySprite){
         Fighter.game.time.events.remove(loop1);
         Fighter.game.time.events.remove(loop2);
         Fighter.game.time.events.remove(loop3);
+        Fighter.game.time.events.remove(loop4);
 
         Fighter.playerDie = true;
         var gameover = Fighter.game.add.image(550, 150, 'gameover');
@@ -286,16 +300,22 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
          fade2 = Fighter.game.time.events.add(Phaser.Timer.SECOND * 3, fadeTransperant,this);
        }
 
-      if (giftSprite.giftType == "Mega Blast") {
+      if (giftSprite.giftType == "Blast") {
         giftSprite.kill();
         Fighter.enemyGroup.forEach(function(enemy){
-          if (enemy.inWorld && enemy.alive) {
-            getExplosion(enemy.x,enemy.y);
-            enemy.kill();
-            Fighter.score += 1;
+          if(enemy.alive && Phaser.Math.distance(Fighter.game.input.activePointer.x,Fighter.game.input.activePointer.y, enemy.x, enemy.y) < 500){
+	          getExplosion(enemy.x,enemy.y);
+	          enemy.kill();
+	          Fighter.score += 1;
             Fighter.score1 += 1;
-          }
+        	}
         });
+      }
+
+      if (giftSprite.giftType == "Star") {
+        giftSprite.kill();
+        Fighter.score += 5;
+        Fighter.score1 += 5;
       }
 }
 

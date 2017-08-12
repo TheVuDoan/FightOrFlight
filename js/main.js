@@ -6,7 +6,9 @@ Fighter.configs = {
   PLAYER1_STARTX: 500,
   PLAYER1_STARTY: 500,
   SHIELD_DELAY: 15,
-  MEGA_DELAY: 25
+  MEGA_DELAY: 25,
+  BOSS_X: 1000,
+  BOSS_Y: 500
 };
 
 window.onload = function() {

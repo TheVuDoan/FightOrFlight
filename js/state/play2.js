@@ -2,15 +2,15 @@ var timeEnemy = 0;
 var timeColli = 0;
 var shield = 0;
 var myShield;
-var loop,loop1,loop2,loop3;
+var loop,loop1,loop2,loop3,loop4,loop5;
 var flash,fade;
-var transperant = false;
 var play2State = {
   create:function() {
     Fighter.game.stage.backgroundColor = '#808080';
     // game score
     Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
     Fighter.score = Fighter.score1;
+    Fighter.score2 = Fighter.score1; // Diem man 2+1
     Fighter.frame = 0;
     Fighter.playerDie = false;
     Fighter.displayingText = Fighter.game.add.text( 1300, 30, "Score: " + Fighter.score, Fighter.style);
@@ -74,13 +74,13 @@ var play2State = {
           )
         );
     }, this);
-    //transperant
+    //Blast
     loop2 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 25, function(){
         let x,y;
         x = Math.floor(Math.random() * 1600) + 50;
         y = Math.floor(Math.random() * 900) + 50;
         Fighter.gift.push(
-          new GiftType2Controller(
+          new GiftType4Controller(
             x ,
             y ,
             {}
@@ -94,6 +94,32 @@ var play2State = {
         y = Math.floor(Math.random() * 900) + 50;
         Fighter.gift.push(
           new GiftType3Controller(
+            x ,
+            y ,
+            {}
+          )
+        );
+    }, this);
+    //star
+    loop4 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
+        let x,y;
+        x = Math.floor(Math.random() * 1600) + 50;
+        y = Math.floor(Math.random() * 900) + 50;
+        Fighter.gift.push(
+          new GiftType5Controller(
+            x ,
+            y ,
+            {}
+          )
+        );
+    }, this);
+    //dublicate
+    loop5 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 35, function(){
+        let x,y;
+        x = Math.floor(Math.random() * 1600) + 50;
+        y = Math.floor(Math.random() * 900) + 50;
+        Fighter.gift.push(
+          new GiftType6Controller(
             x ,
             y ,
             {}
@@ -121,6 +147,7 @@ var play2State = {
     if(!Fighter.playerDie){
       Fighter.frame++;
       Fighter.score += (Fighter.frame % 60 === 0);
+      Fighter.score2 += (Fighter.frame % 60 === 0);
       Fighter.gameTime += (Fighter.frame % 60 === 0);
       Fighter.displayingText.setText("Score: " + Fighter.score);
     } else {
@@ -143,19 +170,18 @@ var play2State = {
             getExplosion(enemy.x,enemy.y);
             enemy.kill();
             Fighter.score += 1;
+            Fighter.score2 += 1;
           }
         });
       }
       // va cham cac enemy vs nhau
     	Fighter.game.physics.arcade.collide(Fighter.enemyGroup);
       // va cham player vs enemy
-      if(transperant == false) {
         Fighter.game.physics.arcade.overlap(
           Fighter.playerGroup,
           Fighter.enemyGroup,
           getCollie2
         );
-      }
 
       Fighter.game.physics.arcade.overlap(
         Fighter.playerGroup,
@@ -170,7 +196,7 @@ var play2State = {
 
       //Level up
       if(Fighter.countTime === 180 && !Fighter.playerDie) {
-        Fighter.game.state.start('stage2Opening');
+        Fighter.game.state.start('stage3Opening');
       }
     }
 }
@@ -215,6 +241,8 @@ var getCollie2 = function(playerSprite, enemySprite){
         Fighter.game.time.events.remove(loop1);
         Fighter.game.time.events.remove(loop2);
         Fighter.game.time.events.remove(loop3);
+        Fighter.game.time.events.remove(loop4);
+        Fighter.game.time.events.remove(loop5);
 
         Fighter.playerDie = true;
         var gameover = Fighter.game.add.image(550, 150, 'gameover');
@@ -256,30 +284,17 @@ var onPlayerGetGift2 = function(playerSprite, giftSprite) {
         fade = Fighter.game.time.events.add(Phaser.Timer.SECOND * 3, fadeSprite,this);
       }
 
-      if(giftSprite.giftType == "Transperant") {
-         giftSprite.kill();
-         if(transperant == 1) {
-           Fighter.trans.kill();
-           clearTimeout(myTrans);
-           Fighter.game.time.events.remove(fade2);
-           Fighter.game.time.events.remove(flash2);
-         }
-         else transperant = 1;
-         var m = Fighter.playerGroup.getFirstAlive();
-
-         Fighter.trans = playerSprite.addChild(Fighter.game.add.sprite(0, 0, 'trans'));
-         Fighter.trans.alpha = 0.5;
-         m.alpha = 0.5;
-         Fighter.trans.anchor.setTo(0.5, 0.5);
-         myTrans = setTimeout(function(){
-           Fighter.trans.kill();
-           transperant = 0;
-           m.alpha = 1;
-         }, 5000);
-
-         Fighter.game.time.events.remove(flash2);
-         fade2 = Fighter.game.time.events.add(Phaser.Timer.SECOND * 3, fadeTransperant,this);
-       }
+      if (giftSprite.giftType == "Blast") {
+        giftSprite.kill();
+        Fighter.enemyGroup.forEach(function(enemy){
+          if(enemy.alive && Phaser.Math.distance(Fighter.game.input.activePointer.x,Fighter.game.input.activePointer.y, enemy.x, enemy.y) < 500){
+	          getExplosion(enemy.x,enemy.y);
+	          enemy.kill();
+	          Fighter.score += 1;
+            Fighter.score1 += 1;
+        	}
+        });
+      }
 
       if (giftSprite.giftType == "Mega Blast") {
         giftSprite.kill();
@@ -288,8 +303,19 @@ var onPlayerGetGift2 = function(playerSprite, giftSprite) {
             getExplosion(enemy.x,enemy.y);
             enemy.kill();
             Fighter.score += 1;
+            Fighter.score2 += 1;
           }
         });
+      }
+
+      if (giftSprite.giftType == "Star") {
+        giftSprite.kill();
+        Fighter.score += 5;
+        Fighter.score2 += 5;
+      }
+
+      if (giftSprite.giftType == "Dublicate") {
+        //TODO
       }
 }
 
@@ -306,13 +332,4 @@ var fadeSprite = function() {
 	    Fighter.game.add.tween(Fighter.shield).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
 		}
 		,this);
-}
-
-var fadeTransperant = function(){
-	flash2 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 0.2,
-		function(){
-	    	Fighter.game.add.tween(Fighter.trans).to( { alpha: 0 }, 0, Phaser.Easing.Linear.None, true);
-	    	Fighter.game.add.tween(Fighter.trans).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
-		}
-	,this);
 }

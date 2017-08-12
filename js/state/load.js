@@ -18,14 +18,17 @@ var loadState = {
     Fighter.game.load.image('playerBound','Assets/playerBound.png');
     Fighter.game.load.image('Enemy1','Assets/EnemyType1.png');
     Fighter.game.load.image('Enemy2','Assets/EnemyType2.png');
+    Fighter.game.load.image('Boss','Assets/Boss.png');
 
-    Fighter.game.load.image('levelup', 'Assets/levelup.png');
     Fighter.game.load.image('gameover', 'Assets/gameover.png');
     Fighter.game.load.image('replay', 'Assets/replay.png');
 
-    Fighter.game.load.image('transGift','Assets/speedGift.png');
+    Fighter.game.load.image('transGift','Assets/Vanish.png');
     Fighter.game.load.image('shieldGift','Assets/shieldGift.png');
     Fighter.game.load.image('killGift','Assets/killGift.png');
+    Fighter.game.load.image('star','Assets/Star.png');
+    Fighter.game.load.image('dublicate','Assets/Split.png');
+    Fighter.game.load.image('blast','Assets/Blast.png');
   },
 
   create: function() {
