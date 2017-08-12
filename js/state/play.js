@@ -140,11 +140,6 @@ var playState = {
             //Fighter.game.state.start('win');
         }
 
-        //Level up
-        if(Fighter.countTime === 10 && !Fighter.playerDie) {
-          Fighter.game.state.start('stage2Opening');
-        }
-
       // va cham shield va enemy
         if(shield == 1){
           Fighter.enemyGroup.forEach(function(enemy){
@@ -177,6 +172,11 @@ var playState = {
           timeEnemy = Fighter.game.time.now + 200;
           createEnemy1();
 	       }
+
+         //Level up
+         if(Fighter.countTime === 90 && !Fighter.playerDie) {
+           Fighter.game.state.start('stage2Opening');
+         }
     }
 }
 
