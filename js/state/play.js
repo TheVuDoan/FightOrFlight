@@ -3,6 +3,8 @@ var timeEnemy = 0;
 var timeColli = 0;
 var shield = 0;
 var myShield;
+var loop1,loop2,loop3;
+var transperant = false;
 var playState = {
   create: function() {
       Fighter.game.stage.backgroundColor = '808080';
@@ -54,42 +56,50 @@ var playState = {
       // Generate Enemy
       Fighter.enemies = [];
       // thiet lap 5 lan tang toc cho enemy
-      for( var i = 1; i < 5; i++){
-        setTimeout(function() {
-        SPEED += 100;
-        }, i*5000);
-      }
+      Fighter.game.time.events.loop(Phaser.Timer.SECOND * 5, function(){
+          SPEED += 100;
+      },this);
 
-      // random giap
       Fighter.gift = [];
-      let z = Fighter.configs.SHIELD_DELAY;
-      setInterval(function(){
-      		let x,y;
-        	x = Math.floor(Math.random() * 1600) + 50;
-        	y = Math.floor(Math.random() * 900) + 50;
-		      Fighter.gift.push(
-		        new GiftType1Controller(
-		          x ,
-		          y ,
-		          {}
-		        )
-		      );
-		  }, z * 1000);
-
-      //random Mega Blast
-      let z2 = Fighter.configs.MEGA_DELAY;
-      setInterval(function(){
-          let x2,y2;
-          x2 = Math.floor(Math.random() * 1600) + 50;
-          y2 = Math.floor(Math.random() * 900) + 50;
+      //shield
+      loop1 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
+          let x,y;
+          x = Math.floor(Math.random() * 1600) + 50;
+          y = Math.floor(Math.random() * 900) + 50;
           Fighter.gift.push(
-            new GiftType3Controller(
-              x2 ,
-              y2 ,
+            new GiftType1Controller(
+              x ,
+              y ,
               {}
             )
           );
-      }, z2 * 1000);
+      }, this);
+      //transperant
+      loop2 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 5, function(){
+          let x,y;
+          x = Math.floor(Math.random() * 1600) + 50;
+          y = Math.floor(Math.random() * 900) + 50;
+          Fighter.gift.push(
+            new GiftType2Controller(
+              x ,
+              y ,
+              {}
+            )
+          );
+      }, this);
+      //Megablast
+      loop3 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 15, function(){
+          let x,y;
+          x = Math.floor(Math.random() * 1600) + 50;
+          y = Math.floor(Math.random() * 900) + 50;
+          Fighter.gift.push(
+            new GiftType3Controller(
+              x ,
+              y ,
+              {}
+            )
+          );
+      }, this);
     },
 
     replay:function() {
@@ -124,7 +134,7 @@ var playState = {
             }
 
             clearInterval(this.enemyInterval);
-            Fighter.game.state.start('win');
+            //Fighter.game.state.start('win');
         }
       // va cham shield va enemy
         if(shield == 1){
@@ -139,11 +149,13 @@ var playState = {
       // va cham cac enemy vs nhau
     	  Fighter.game.physics.arcade.collide(Fighter.enemyGroup);
       // va cham player vs enemy
+      if(transperant == false) {
         Fighter.game.physics.arcade.overlap(
           Fighter.playerGroup,
           Fighter.enemyGroup,
           getCollie
         );
+      }
 
         Fighter.game.physics.arcade.overlap(
           Fighter.playerGroup,
@@ -194,6 +206,11 @@ var getCollie = function(playerSprite, enemySprite){
 	      playerSprite.kill();
         // GAMEOVER
 
+        SPEED = 300;
+        Fighter.game.time.events.remove(loop1);
+        Fighter.game.time.events.remove(loop2);
+        Fighter.game.time.events.remove(loop2);
+
         Fighter.playerDie = true;
         var gameover = Fighter.game.add.image(550, 150, 'gameover');
         gameover.width = 500;
@@ -229,6 +246,20 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
           Fighter.shield.kill();
           shield = 0;
         }, 7000);
+      }
+
+      if(giftSprite.giftType == "Transperant"){
+         giftSprite.kill();
+         transperant = true;
+         Fighter.playerGroup.forEach(function(m){
+          m.alpha = 0.5;
+         },this);
+         Fighter.game.time.events.add(Phaser.Timer.SECOND * 5, function(){
+            Fighter.playerGroup.forEach(function(m){
+              m.alpha = 1;
+              transperant = false;
+            });
+         },this);
       }
 
       if (giftSprite.giftType == "Mega Blast") {
