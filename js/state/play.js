@@ -168,7 +168,7 @@ var playState = {
           onPlayerGetGift
         );
 
-        if(Fighter.game.time.now > timeEnemy ){
+        if(Fighter.game.time.now > timeEnemy && Fighter.countTime <= 85){
           timeEnemy = Fighter.game.time.now + 200;
           createEnemy1();
 	       }
