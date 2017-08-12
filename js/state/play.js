@@ -4,6 +4,7 @@ var timeColli = 0;
 var shield = 0;
 var myShield;
 var loop1,loop2,loop3;
+var flash,fade;
 var transperant = false;
 var playState = {
   create: function() {
@@ -235,6 +236,8 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
         if(shield == 1) {
           Fighter.shield.kill();
           clearTimeout(myShield);
+          Fighter.game.time.events.remove(fade);
+    		  Fighter.game.time.events.remove(flash);
         }
         else shield = 1;
         Fighter.shield = playerSprite.addChild(Fighter.game.add.sprite(0, 0, 'shield'));
@@ -245,6 +248,8 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
           Fighter.shield.kill();
           shield = 0;
         }, 5000);
+        Fighter.game.time.events.remove(flash);
+        fade = Fighter.game.time.events.add(Phaser.Timer.SECOND * 4, fadeSprite,this);
       }
 
       if(giftSprite.giftType == "Transperant"){
@@ -262,7 +267,6 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
       }
 
       if (giftSprite.giftType == "Mega Blast") {
-        //killAll(playerSprite,giftSprite);
         giftSprite.kill();
         Fighter.enemyGroup.forEach(function(enemy){
           if (enemy.inWorld && enemy.alive) {
@@ -278,4 +282,13 @@ var checkOverlap = function(spriteA, spriteB) {
   var boundsA = spriteA.getBounds();
   var boundsB = spriteB.getBounds();
   return Phaser.Rectangle.intersects(boundsA, boundsB);
+}
+
+var fadeSprite = function() {
+	 flash = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 0.2,
+		function(){
+	    Fighter.game.add.tween(Fighter.shield).to( { alpha: 0 }, 0, Phaser.Easing.Linear.None, true);
+	    Fighter.game.add.tween(Fighter.shield).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
+		}
+		,this);
 }
