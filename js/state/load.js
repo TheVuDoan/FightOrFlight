@@ -13,8 +13,10 @@ var loadState = {
     Fighter.game.load.image('shield','Assets/Shield.png');
     Fighter.game.load.image('Player','Assets/player.png');
     Fighter.game.load.image('playerBound','Assets/playerBound.png');
-    Fighter.game.load.image('Enemy','Assets/enemy.png');
+    Fighter.game.load.image('Enemy1','Assets/EnemyType1.png');
+    Fighter.game.load.image('Enemy2','Assets/EnemyType2.png');
 
+    Fighter.game.load.image('levelup', 'Assets/levelup.png');
     Fighter.game.load.image('gameover', 'Assets/gameover.png');
     Fighter.game.load.image('replay', 'Assets/replay.png');
 

@@ -12,6 +12,7 @@ var playState = {
       // game score
       Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
       Fighter.score = 0;
+      Fighter.score1 = 0; //lvl1 score
       Fighter.frame = 0;
       Fighter.playerDie = false;
       Fighter.displayingText = Fighter.game.add.text( 1300, 30, "Score: " + Fighter.score, Fighter.style);
@@ -58,7 +59,7 @@ var playState = {
       Fighter.enemies = [];
       // thiet lap 5 lan tang toc cho enemy
       loop = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
-          SPEED += 90;
+          SPEED += 100;
       },this);
 
       Fighter.gift = [];
@@ -122,6 +123,7 @@ var playState = {
         if(!Fighter.playerDie){
             Fighter.frame++;
             Fighter.score += (Fighter.frame % 60 === 0);
+            Fighter.score1 += (Fighter.frame % 60 === 0);
             Fighter.gameTime += (Fighter.frame % 60 === 0);
             Fighter.displayingText.setText("Score: " + Fighter.score);
         } else {
@@ -137,6 +139,32 @@ var playState = {
             clearInterval(this.enemyInterval);
             //Fighter.game.state.start('win');
         }
+
+        //Level up
+        if(Fighter.countTime === 90 && !Fighter.playerDie) {
+          var levelup = Fighter.game.add.image(170, 200, 'levelup');
+          setTimeout(function(){
+            Fighter.game.paused = true;
+            if(Fighter.game.paused) {
+              setTimeout(function(){
+                var text = Fighter.game.add.text(1300, 850, 'LOADING .');
+              }, 2 * 1000);
+              setTimeout(function(){
+                var text = Fighter.game.add.text(1300, 850, 'LOADING . .');
+              }, 3 * 1000);
+              setTimeout(function(){
+                var text = Fighter.game.add.text(1300, 850, 'LOADING . . .');
+              }, 4 * 1000);
+
+              setTimeout(function(){
+                Fighter.game.paused = false;
+                Fighter.game.state.start('play2');
+              }, 5 * 1000);
+            }
+          }, 1 * 1000);
+
+        }
+
       // va cham shield va enemy
         if(shield == 1){
           Fighter.enemyGroup.forEach(function(enemy){
@@ -144,6 +172,7 @@ var playState = {
               getExplosion(enemy.x,enemy.y);
               enemy.kill();
               Fighter.score += 1;
+              Fighter.score1 += 1;
             }
           });
         }
@@ -166,12 +195,12 @@ var playState = {
 
         if(Fighter.game.time.now > timeEnemy ){
           timeEnemy = Fighter.game.time.now + 200;
-          createEnemy();
+          createEnemy1();
 	       }
     }
 }
 
-var createEnemy = function(){
+var createEnemy1 = function(){
   		var x,y;
         	x = Math.floor(Math.random() * 1800) ;
         	y = Math.floor(Math.random() * 1800) ;
@@ -180,10 +209,9 @@ var createEnemy = function(){
         	if(y > 900) y += 900;
         	else y -= 900;
 		      Fighter.enemies.push(
-		        new EnemyController(
+		        new EnemyType1Controller(
 		          x,
 		          y,
-		          'Enemy',
 		          {}
 		        )
 		      );
@@ -250,7 +278,7 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
           shield = 0;
         }, 5000);
         Fighter.game.time.events.remove(flash);
-        fade = Fighter.game.time.events.add(Phaser.Timer.SECOND * 4, fadeSprite,this);
+        fade = Fighter.game.time.events.add(Phaser.Timer.SECOND * 3, fadeSprite,this);
       }
 
       if(giftSprite.giftType == "Transperant"){
@@ -274,6 +302,7 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
             getExplosion(enemy.x,enemy.y);
             enemy.kill();
             Fighter.score += 1;
+            Fighter.score1 += 1;
           }
         });
       }
