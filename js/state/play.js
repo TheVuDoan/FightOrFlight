@@ -59,7 +59,7 @@ var playState = {
       Fighter.enemies = [];
       // thiet lap 5 lan tang toc cho enemy
       loop = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
-          SPEED += 90;
+          SPEED += 80;
       },this);
 
       Fighter.gift = [];

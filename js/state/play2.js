@@ -4,6 +4,7 @@ var shield = 0;
 var myShield;
 var loop,loop1,loop2,loop3,loop4,loop5;
 var flash,fade;
+var dublicate = false;
 var play2State = {
   create:function() {
     Fighter.game.stage.backgroundColor = '#808080';
@@ -314,8 +315,14 @@ var onPlayerGetGift2 = function(playerSprite, giftSprite) {
         Fighter.score2 += 5;
       }
 
-      if (giftSprite.giftType == "Dublicate") {
-        //TODO
+      if(giftSprite.giftType == "Dublicate"){
+      	giftSprite.kill();
+      	playerSprite.clone = Fighter.game.add.sprite(20,20,'Player');
+        dublicate = true;
+        setTimeout(function(){
+          dublicate = false;
+          playerSprite.clone.kill();
+        }, 5000);
       }
 }
 
