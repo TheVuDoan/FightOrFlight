@@ -328,6 +328,7 @@ var getCollie2 = function(playerSprite, enemySprite){
 	      getExplosion(playerSprite.x, playerSprite.y);
 	      playerSprite.kill();
         // GAMEOVER
+        Fighter.explosionSound.play();
         Fighter.soundtrackSound.stop();
         SPEED = 300;
         Fighter.game.time.events.remove(loop);
@@ -342,9 +343,9 @@ var getCollie2 = function(playerSprite, enemySprite){
         Fighter.game.time.events.remove(loop9);
 
         Fighter.playerDie = true;
-        var gameover = Fighter.game.add.image(400, 150, 'gameover');
-        gameover.width = 900;
-        gameover.height = 350;
+        var gameover = Fighter.game.add.image(200, 150, 'gameover');
+        gameover.width = 1300;
+        gameover.height = 250;
 
         if(localStorage.getItem("highscore") < Fighter.score){
           localStorage.setItem("highscore", Fighter.score);
@@ -352,7 +353,7 @@ var getCollie2 = function(playerSprite, enemySprite){
         var score = Fighter.game.add.text(700,450, 'Score: ' + Fighter.score,{font: "bold 50px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
         var highscore = Fighter.game.add.text(650,550, 'Highscore:' + localStorage.getItem("highscore"),{font: "bold 50px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle"});
 
-        var replay = Fighter.game.add.button(700, 650, 'replay', playState.replay, this);
+        var replay = Fighter.game.add.button(700, 650, 'replay', play2State.replay, this);
         replay.width = 200;
         replay.height = 200;
         Fighter.game.paused;

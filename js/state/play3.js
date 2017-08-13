@@ -194,15 +194,16 @@ var onBulletHitPlayer = function(bulletSprite, playerSprite){
 		playerSprite.kill();
 		// GAMEOVER
 		Fighter.soundtrackSound.stop();
+		Fighter.explosionSound.play();
 		SPEED = 300;
 		Fighter.game.time.events.remove(loop);
 		Fighter.game.time.events.remove(loop1);
 		Fighter.game.time.events.remove(loop4);
 
 		Fighter.playerDie = true;
-		var gameover = Fighter.game.add.image(400, 150, 'gameover');
-		gameover.width = 900;
-		gameover.height = 350;
+		var gameover = Fighter.game.add.image(200, 150, 'gameover');
+		gameover.width = 1300;
+		gameover.height = 250;
 
 		if(localStorage.getItem("highscore") < Fighter.score){
 			localStorage.setItem("highscore", Fighter.score);
@@ -210,7 +211,7 @@ var onBulletHitPlayer = function(bulletSprite, playerSprite){
 		var score = Fighter.game.add.text(700,450, 'Score: ' + Fighter.score,{font: "bold 50px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
 		var highscore = Fighter.game.add.text(650,550, 'Highscore:' + localStorage.getItem("highscore"),{font: "bold 50px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle"});
 
-		var replay = Fighter.game.add.button(700, 650, 'replay', playState.replay, this);
+		var replay = Fighter.game.add.button(700, 650, 'replay', play3State.replay, this);
 		replay.width = 200;
 		replay.height = 200;
 		Fighter.game.paused;
