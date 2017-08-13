@@ -13,6 +13,8 @@ var playState = {
       Fighter.explosionSound = Fighter.game.add.audio('Explosion');
       Fighter.getItemSound = Fighter.game.add.audio('GetItem');
       Fighter.gameoverSound = Fighter.game.add.audio('Gameover');
+      Fighter.soundtrackSound = Fighter.game.add.audio('Soundtrack');
+      Fighter.soundtrackSound.play();
 
       // game score
       Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };

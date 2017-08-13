@@ -36,6 +36,7 @@ var loadState = {
     Fighter.game.load.audio('Explosion', ['Assets/Explosion.mp3']);
     Fighter.game.load.audio('GetItem', ['Assets/getItem.wav']);
     Fighter.game.load.audio('Gameover', ['Assets/gameover.wav']);
+    Fighter.game.load.audio('Soundtrack', ['Assets/soundtrack1.mp3']);
   },
 
   create: function() {
