@@ -3,7 +3,7 @@ var stage2OpeningState = {
   create: function() {
     Fighter.game.stage.backgroundColor = '000000';
     buttonSkip = Fighter.game.add.button(20, 800, 'skip',stage2OpeningState.onSkipClick, this);
-    buttoSkip.height = 150;
+    buttonSkip.height = 150;
     buttonSkip.width = 150;
     buttonNext = Fighter.game.add.button(1500, 800, 'next',stage2OpeningState.onNextClick, this);
     buttonNext.height = 150;
