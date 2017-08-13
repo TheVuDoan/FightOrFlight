@@ -2,7 +2,7 @@ var targetAngle;
 class EnemyType2Controller extends EnemyController{
   constructor(x, y, configs){
     super(x, y, "Enemy2", configs);
-    this.sprite.SPEED = 200;
+    this.sprite.SPEED = 240;
     this.sprite.TURN_SPEED = 20;
     this.sprite.update = this.update.bind(this);
   }

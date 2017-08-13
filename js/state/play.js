@@ -142,6 +142,7 @@ var playState = {
         }
       }
       // update score
+        //Fighter.score.bringToTop();
         if(!Fighter.playerDie){
             Fighter.frame++;
             Fighter.score += (Fighter.frame % 60 === 0);

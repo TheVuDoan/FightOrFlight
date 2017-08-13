@@ -10,6 +10,8 @@ var stage3OpeningState = {
     buttonNext.width = 150;
   },
   onNextClick: function() {
+    buttonSkip.pendingDestroy = true;
+    buttonNext.pendingDestroy = true;
     setTimeout(function(){
       Fighter.game.add.text(400,200, 'Chapter 3: The Boss',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
     }, 1000);

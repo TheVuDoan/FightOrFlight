@@ -25,7 +25,8 @@ var menuState = {
       Fighter.game.state.start('stage1Opening');
   },
   onHowToPlayClick: function() {
-      console.log("onHowToPlayClick");
+      //console.log("onHowToPlayClick");
+      Fighter.game.state.start('howtoplay');
   },
   onCreditClick: function() {
       //console.log("onCreditClick");

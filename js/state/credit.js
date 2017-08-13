@@ -8,7 +8,7 @@ var creditState = {
     Fighter.game.add.text(500,700, 'Phạm Hữu Thọ',{font: "bold 60px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
     buttonBack = Fighter.game.add.button(20, 800, 'back',creditState.onBackClick, this);
     buttonBack.height = 150;
-    buttonBack.width = 280;
+    buttonBack.width = 150;
   },
   onBackClick: function() {
     Fighter.game.state.start('menu');

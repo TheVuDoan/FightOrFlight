@@ -37,7 +37,7 @@ var stage2OpeningState = {
       Fighter.game.state.start('play2');
     }, 14000);
   },
-  onSKipClick: function() {
+  onSkipClick: function() {
     Fighter.game.state.start('play2');
   }
 }
