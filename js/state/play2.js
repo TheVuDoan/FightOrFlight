@@ -349,10 +349,10 @@ var getCollie2 = function(playerSprite, enemySprite){
         if(localStorage.getItem("highscore") < Fighter.score){
           localStorage.setItem("highscore", Fighter.score);
         }
-        var score = Fighter.game.add.text(700,550, 'Score: ' + Fighter.score,{font: "bold 50px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
-        var highscore = Fighter.game.add.text(650,650, 'Highscore:' + localStorage.getItem("highscore"),{font: "bold 50px Arial", fill: "white", boundsAlignH: "center", boundsAlignV: "middle"});
+        var score = Fighter.game.add.text(700,450, 'Score: ' + Fighter.score,{font: "bold 50px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
+        var highscore = Fighter.game.add.text(650,550, 'Highscore:' + localStorage.getItem("highscore"),{font: "bold 50px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle"});
 
-        var replay = Fighter.game.add.button(700, 750, 'replay', play2State.replay, this);
+        var replay = Fighter.game.add.button(700, 650, 'replay', playState.replay, this);
         replay.width = 200;
         replay.height = 200;
         Fighter.game.paused;
