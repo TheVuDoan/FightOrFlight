@@ -6,8 +6,17 @@ class EnemyType1Controller extends EnemyController{
       "Enemy1",
       configs
     );
+    this.sprite.body.bounce.set(0.8);
+    this.sprite.anchor.set(0.5);
+    this.sprite.scale.set(1);
+    var radius = this.sprite.width / 2;
+    this.sprite.body.setCircle(
+        radius,
+        (-radius + 0.5 * this.sprite.width / this.sprite.scale.x),
+        (-radius + 0.5 * this.sprite.height / this.sprite.scale.y)
+    );
+    this.sprite.checkworldbounds = true;
     this.sprite.outOfBoundsKill = true;
-  	this.worldbounds = 0;
     this.SPEED = SPEED;
     var a,b;
     Fighter.playerGroup.forEach(function(m){
@@ -27,12 +36,6 @@ class EnemyType1Controller extends EnemyController{
   }
 
   update(){
-    if(this.sprite.checkworldbounds == true)
-      this.worldbounds++;
-    if(this.worldbounds == 2) {
-      getExplosion(this.sprite.x, this.sprite.y);
-      this.sprite.kill();
-    }
 		this.sprite.angle += 2;
   }
 }

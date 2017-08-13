@@ -2,6 +2,7 @@ class ShipController{
   constructor(x, y, spriteName,configs){
     this.sprite = Fighter.playerGroup.create(x, y, spriteName);
     this.sprite.body.collideWorldBounds = true;
+    Fighter.game.physics.arcade.enable(this.sprite);
     this.sprite.anchor = new Phaser.Point(0.5, 0.5);
     this.sprite.dublicate = dublicate;
 

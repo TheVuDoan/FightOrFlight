@@ -9,6 +9,11 @@ var transperant = 0;
 var playState = {
   create: function() {
       Fighter.game.stage.backgroundColor = '808080';
+      //audio
+      Fighter.explosionSound = Fighter.game.add.audio('Explosion');
+      Fighter.getItemSound = Fighter.game.add.audio('GetItem');
+      Fighter.gameoverSound = Fighter.game.add.audio('Gameover');
+
       // game score
       Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
       Fighter.score = 0;
@@ -157,6 +162,7 @@ var playState = {
         if(shield == 1){
           Fighter.enemyGroup.forEach(function(enemy){
             if(checkOverlap(enemy, Fighter.shield) && enemy.alive){
+              Fighter.explosionSound.play();
               getExplosion(enemy.x,enemy.y);
               enemy.kill();
               Fighter.score += 1;
@@ -226,8 +232,9 @@ var getCollie = function(playerSprite, enemySprite){
       if(shield == 0){
 	      getExplosion(playerSprite.x, playerSprite.y);
 	      playerSprite.kill();
+        Fighter.explosionSound.play();
         // GAMEOVER
-
+        Fighter.gameoverSound.play();
         SPEED = 300;
         Fighter.game.time.events.remove(loop);
         Fighter.game.time.events.remove(loop1);
@@ -254,6 +261,7 @@ var getCollie = function(playerSprite, enemySprite){
 }
 
 var onPlayerGetGift = function(playerSprite, giftSprite) {
+      Fighter.getItemSound.play();
       if (giftSprite.giftType == "Shield") {
         giftSprite.kill();
         if(shield == 1) {
@@ -305,6 +313,7 @@ var onPlayerGetGift = function(playerSprite, giftSprite) {
         Fighter.enemyGroup.forEach(function(enemy){
           if(enemy.alive && Phaser.Math.distance(Fighter.game.input.activePointer.x,Fighter.game.input.activePointer.y, enemy.x, enemy.y) < 500){
 	          getExplosion(enemy.x,enemy.y);
+            Fighter.explosionSound = Fighter.game.add.audio('Explosion');
 	          enemy.kill();
 	          Fighter.score += 1;
             Fighter.score1 += 1;

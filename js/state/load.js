@@ -31,6 +31,11 @@ var loadState = {
     Fighter.game.load.image('star','Assets/Star.png');
     Fighter.game.load.image('dublicate','Assets/Split.png');
     Fighter.game.load.image('blast','Assets/Blast.png');
+
+    //load audio
+    Fighter.game.load.audio('Explosion', ['Assets/Explosion.mp3']);
+    Fighter.game.load.audio('GetItem', ['Assets/getItem.wav']);
+    Fighter.game.load.audio('Gameover', ['Assets/gameover.wav']);
   },
 
   create: function() {
