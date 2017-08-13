@@ -198,7 +198,7 @@ var playState = {
 	       }
 
          //Level up
-         if(Fighter.countTime === 90 && !Fighter.playerDie) {
+         if(Fighter.countTime === 3 && !Fighter.playerDie) {
            Fighter.game.state.start('stage2Opening');
          }
     }

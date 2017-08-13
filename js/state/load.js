@@ -33,7 +33,7 @@ var loadState = {
     Fighter.game.load.image('shieldGift','Assets/shieldGift.png');
     Fighter.game.load.image('killGift','Assets/killGift.png');
     Fighter.game.load.image('star','Assets/Star.png');
-    Fighter.game.load.image('dublicate','Assets/Split.png');
+    Fighter.game.load.image('dublicate','Assets/split.png');
     Fighter.game.load.image('blast','Assets/Blast.png');
 
     //load audio

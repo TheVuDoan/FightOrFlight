@@ -3,7 +3,7 @@ class EnemyType2Controller extends EnemyController{
   constructor(x, y, configs){
     super(x, y, "Enemy2", configs);
     this.sprite.SPEED = 240;
-    this.sprite.TURN_SPEED = 20;
+    this.sprite.TURN_SPEED = 5;
     this.sprite.update = this.update.bind(this);
   }
 

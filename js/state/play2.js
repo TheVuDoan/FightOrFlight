@@ -2,9 +2,10 @@ var timeEnemy = 0;
 var timeColli = 0;
 var shield = 0;
 var myShield;
-var loop,loop1,loop2,loop3,loop4,loop5;
+var loop,loop1,loop2,loop3,loop4,loop5,loop6,loop7,loop8;
 var flash,fade;
 var dublicate = false;
+var normalEnemy = 1;
 var play2State = {
   create:function() {
     Fighter.game.stage.backgroundColor = '#808080';
@@ -60,6 +61,22 @@ var play2State = {
     loop = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 10, function(){
         SPEED += 50;
     },this);
+
+    loop6 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 30, function(){
+        normalEnemy = 0;
+        createEnemy3();
+        normalEnemy = 1;
+    }, this);
+
+    loop7 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 22, function(){
+        Fighter.round = Fighter.game.add.sprite(600, 600, 'Enemy1');
+        Fade(Fighter.round);
+      }, this);
+    loop8 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 24, function(){
+        normalEnemy = 0;
+        createEnemy4();
+        normalEnemy = 1;
+    }, this);
 
     Fighter.gift = [];
     //shield
@@ -190,11 +207,10 @@ var play2State = {
         onPlayerGetGift2
       );
 
-      if(Fighter.game.time.now > timeEnemy ){
+      if(Fighter.game.time.now > timeEnemy && normalEnemy == 1){
         timeEnemy = Fighter.game.time.now + 500;
         createEnemy2();
 	    }
-
       //Level up
       if(Fighter.countTime === 180 && !Fighter.playerDie) {
         Fighter.game.state.start('stage3Opening');
@@ -217,6 +233,48 @@ var createEnemy2 = function(){
 		          {}
 		        )
 		      );
+}
+
+var createEnemy3 = function(){
+  		for (let i = 10 ; i < 1500 ; i+=100) {
+		      Fighter.enemies.push(
+		        new EnemyType3Controller(
+		          i,
+		          10,
+		          {
+                type : 'down'
+              }
+		        )
+		      );
+        }
+      for (let i = 157 ; i < 1800 ; i+=100) {
+  		     Fighter.enemies.push(
+  		       new EnemyType3Controller(
+  		         i,
+  		         900,
+  		         {
+                 type : 'up'
+               }
+  		       )
+  		     );
+        }
+}
+
+var createEnemy4 = function(){
+
+        //Fade(Fighter.round);
+
+          for(var i = 0 ; i < 361 ; i+= 10)
+          {
+              new EnemyType4Controller(
+               600,
+               600,
+              {
+                Angle : i
+              }
+            )
+          }
+          Fighter.round.kill();
 }
 
 var getExplosion = function(x, y) {
@@ -244,6 +302,9 @@ var getCollie2 = function(playerSprite, enemySprite){
         Fighter.game.time.events.remove(loop3);
         Fighter.game.time.events.remove(loop4);
         Fighter.game.time.events.remove(loop5);
+        Fighter.game.time.events.remove(loop6);
+        Fighter.game.time.events.remove(loop7);
+        Fighter.game.time.events.remove(loop8);
 
         Fighter.playerDie = true;
         var gameover = Fighter.game.add.image(550, 150, 'gameover');
@@ -337,6 +398,15 @@ var fadeSprite = function() {
 		function(){
 	    Fighter.game.add.tween(Fighter.shield).to( { alpha: 0 }, 0, Phaser.Easing.Linear.None, true);
 	    Fighter.game.add.tween(Fighter.shield).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
+		}
+		,this);
+}
+
+var Fade = function(sprite) {
+	 flash = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 0.2,
+		function(){
+	    Fighter.game.add.tween(sprite).to( { alpha: 0 }, 0, Phaser.Easing.Linear.None, true);
+	    Fighter.game.add.tween(sprite).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
 		}
 		,this);
 }
