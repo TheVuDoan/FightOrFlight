@@ -43,7 +43,7 @@ var stage3OpeningState = {
     }, 11000);
     setTimeout(function(){
       if(flag3 === 0) {
-      Fighter.game.add.text(400,550, 'Dont move too fast or you will die...',{font: "bold 33px Courier", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
+      Fighter.game.add.text(400,600, 'Dont move too fast or you will die...',{font: "bold 33px Courier", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
       }
     }, 13000);
     setTimeout(function(){

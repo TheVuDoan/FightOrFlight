@@ -8,7 +8,7 @@ var dublicate = false;
 var normalEnemy = 1;
 var play2State = {
   create:function() {
-    Fighter.game.stage.backgroundColor = '#808080';
+    Fighter.game.stage.backgroundColor = 'FFC857';
     // game score
     Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
     Fighter.score = Fighter.score1;
@@ -336,8 +336,8 @@ var getCollie2 = function(playerSprite, enemySprite){
         Fighter.game.time.events.remove(loop9);
 
         Fighter.playerDie = true;
-        var gameover = Fighter.game.add.image(550, 150, 'gameover');
-        gameover.width = 500;
+        var gameover = Fighter.game.add.image(400, 150, 'gameover');
+        gameover.width = 900;
         gameover.height = 350;
 
         if(localStorage.getItem("highscore") < Fighter.score){

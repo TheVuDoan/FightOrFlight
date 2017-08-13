@@ -195,8 +195,8 @@ var onBulletHitPlayer = function(bulletSprite, playerSprite){
 		Fighter.game.time.events.remove(loop4);
 
 		Fighter.playerDie = true;
-		var gameover = Fighter.game.add.image(550, 150, 'gameover');
-		gameover.width = 500;
+		var gameover = Fighter.game.add.image(400, 150, 'gameover');
+		gameover.width = 900;
 		gameover.height = 350;
 
 		if(localStorage.getItem("highscore") < Fighter.score){

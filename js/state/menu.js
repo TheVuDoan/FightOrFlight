@@ -1,6 +1,6 @@
 var menuState = {
   create:function () {
-    var background = Fighter.game.stage.backgroundColor = '#778899';
+    var background = Fighter.game.stage.backgroundColor = 'E16036';
     // var background = Fighter.game.add.image(Fighter.game.width, Fighter.game.height, 'menuBackground');
 
     background.anchor = new Phaser.Point(0.5, 0.5);

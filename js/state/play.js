@@ -8,7 +8,7 @@ var flash,fade,fade2,flash2,appear;
 var transperant = 0;
 var playState = {
   create: function() {
-      Fighter.game.stage.backgroundColor = '808080';
+      Fighter.game.stage.backgroundColor = 'FFC857';
       //audio
       Fighter.explosionSound = Fighter.game.add.audio('Explosion');
       Fighter.getItemSound = Fighter.game.add.audio('GetItem');
@@ -249,8 +249,8 @@ var getCollie = function(playerSprite, enemySprite){
         Fighter.game.time.events.remove(loop4);
 
         Fighter.playerDie = true;
-        var gameover = Fighter.game.add.image(550, 150, 'gameover');
-        gameover.width = 500;
+        var gameover = Fighter.game.add.image(400, 150, 'gameover');
+        gameover.width = 900;
         gameover.height = 350;
 
         if(localStorage.getItem("highscore") < Fighter.score){
