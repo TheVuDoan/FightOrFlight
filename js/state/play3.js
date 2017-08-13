@@ -140,6 +140,7 @@ var play3State = {
 			Fighter.enemyBulletGroup.forEach(function(enemy){
 				if(checkOverlap(enemy, Fighter.shield) && enemy.alive){
 					getExplosion(enemy.x,enemy.y);
+					Fighter.explosionSound.play();
 					enemy.kill();
 					Fighter.score += 1;
 					Fighter.score2 += 1;
@@ -192,7 +193,7 @@ var onBulletHitPlayer = function(bulletSprite, playerSprite){
 		getExplosion(playerSprite.x, playerSprite.y);
 		playerSprite.kill();
 		// GAMEOVER
-
+		Fighter.soundtrackSound.stop();
 		SPEED = 300;
 		Fighter.game.time.events.remove(loop);
 		Fighter.game.time.events.remove(loop1);
@@ -228,6 +229,7 @@ var getExplosion = function(x, y) {
 }
 
 var onPlayerGetGift7 = function(playerSprite, giftSprite) {
+	Fighter.getItemSound.play();
 	if (giftSprite.giftType == "Missile") {
 		giftSprite.kill();
 		Fighter.missile = [];
