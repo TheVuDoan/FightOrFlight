@@ -4,10 +4,10 @@ var openingState = {
     Fighter.game.stage.backgroundColor = '000000';
     buttonSkip = Fighter.game.add.button(20, 800, 'skip',openingState.onSkipClick, this);
     buttonSkip.height = 150;
-    buttonSkip.width = 280;
-    buttonNext = Fighter.game.add.button(1300, 800, 'next',openingState.onNextClick, this);
+    buttonSkip.width = 150;
+    buttonNext = Fighter.game.add.button(1500, 800, 'next',openingState.onNextClick, this);
     buttonNext.height = 150;
-    buttonNext.width = 280;
+    buttonNext.width = 150;
   },
   onNextClick: function() {
     buttonSkip.pendingDestroy = true;
