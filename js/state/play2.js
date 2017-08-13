@@ -78,7 +78,7 @@ var play2State = {
         normalEnemy = 1;
     }, this);
 
-    loop9 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 44, function(){
+    loop9 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 35, function(){
         normalEnemy = 0;
         createEnemy5();
         normalEnemy = 1;
@@ -267,7 +267,7 @@ var createEnemy3 = function(){
 }
 
 var createEnemy4 = function(){
-          for(var i = 0 ; i < 361 ; i+= 10)
+          for(let i = 0 ; i < 361 ; i+= 10)
           {
               new EnemyType4Controller(
                600,
