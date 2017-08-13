@@ -5,6 +5,10 @@ var flash,fade;
 var play3State = {
 	create: function() {
 	   Fighter.game.stage.backgroundColor = 'FFC857';
+		 Fighter.explosionSound = Fighter.game.add.audio('Explosion');
+		 Fighter.getItemSound = Fighter.game.add.audio('GetItem');
+		 Fighter.gameoverSound = Fighter.game.add.audio('Gameover');
+		 Fighter.soundtrackSound = Fighter.game.add.audio('Soundtrack');
 		 // game score
 		 Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
 		 Fighter.score = Fighter.score2;

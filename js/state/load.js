@@ -29,6 +29,7 @@ var loadState = {
     Fighter.game.load.image('Space','Assets/Space.png');
 
     Fighter.game.load.image('howtoplay2', 'Assets/howtoplay2.png');
+    Fighter.game.load.image('credit2', 'Assets/credit2.png');
     Fighter.game.load.image('gameover', 'Assets/gameover.png');
     Fighter.game.load.image('replay', 'Assets/replay.png');
 

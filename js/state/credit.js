@@ -1,14 +1,14 @@
 var creditState = {
   create: function() {
+
+
+    var image = Fighter.game.add.image(0, 0, 'credit2');
+    image.height = 960;
+    image.width = 1600;
     Fighter.game.stage.backgroundColor = '808080';
-    Fighter.game.add.text(500,300, 'Team: Hackasatic 4',{font: "bold 60px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
-    Fighter.game.add.text(500,400, 'Đoàn Thế Vũ',{font: "bold 60px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
-    Fighter.game.add.text(500,500, 'Vũ Công Duy',{font: "bold 60px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
-    Fighter.game.add.text(500,600, 'Bùi Thị Cúc',{font: "bold 60px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
-    Fighter.game.add.text(500,700, 'Phạm Hữu Thọ',{font: "bold 60px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
-    buttonBack = Fighter.game.add.button(20, 800, 'back',creditState.onBackClick, this);
+    var buttonBack = Fighter.game.add.button(20, 850, 'back',howtoplayState.onBackClick, this);
+    buttonBack.width =100;
     buttonBack.height = 100;
-    buttonBack.width = 100;
   },
   onBackClick: function() {
     Fighter.game.state.start('menu');
