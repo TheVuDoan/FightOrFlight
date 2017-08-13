@@ -14,5 +14,11 @@ class EnemyType3Controller extends EnemyController{
     if (this.configs.type == 'up') {
       this.sprite.body.velocity.y -= this.sprite.SPEED;
     }
+    if (this.configs.type == 'left') {
+      this.sprite.body.velocity.x -= this.sprite.SPEED;
+    }
+    if (this.configs.type == 'right') {
+      this.sprite.body.velocity.x += this.sprite.SPEED;
+    }
   }
 }

@@ -2,7 +2,7 @@ var timeEnemy = 0;
 var timeColli = 0;
 var shield = 0;
 var myShield;
-var loop,loop1,loop2,loop3,loop4,loop5,loop6,loop7,loop8;
+var loop,loop1,loop2,loop3,loop4,loop5,loop6,loop7,loop8,loop9;
 var flash,fade;
 var dublicate = false;
 var normalEnemy = 1;
@@ -75,6 +75,12 @@ var play2State = {
     loop8 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 24, function(){
         normalEnemy = 0;
         createEnemy4();
+        normalEnemy = 1;
+    }, this);
+
+    loop9 = Fighter.game.time.events.loop(Phaser.Timer.SECOND * 44, function(){
+        normalEnemy = 0;
+        createEnemy5();
         normalEnemy = 1;
     }, this);
 
@@ -261,9 +267,6 @@ var createEnemy3 = function(){
 }
 
 var createEnemy4 = function(){
-
-        //Fade(Fighter.round);
-
           for(var i = 0 ; i < 361 ; i+= 10)
           {
               new EnemyType4Controller(
@@ -275,6 +278,31 @@ var createEnemy4 = function(){
             )
           }
           Fighter.round.kill();
+}
+
+var createEnemy5 = function(){
+  		for (let i = 10 ; i < 900 ; i+=100) {
+		      Fighter.enemies.push(
+		        new EnemyType3Controller(
+		          10,
+		          i,
+		          {
+                type : 'right'
+              }
+		        )
+		      );
+        }
+      for (let i = 55 ; i < 1800 ; i+=100) {
+  		     Fighter.enemies.push(
+  		       new EnemyType3Controller(
+  		         1700,
+  		         i,
+  		         {
+                 type : 'left'
+               }
+  		       )
+  		     );
+        }
 }
 
 var getExplosion = function(x, y) {
@@ -305,6 +333,7 @@ var getCollie2 = function(playerSprite, enemySprite){
         Fighter.game.time.events.remove(loop6);
         Fighter.game.time.events.remove(loop7);
         Fighter.game.time.events.remove(loop8);
+        Fighter.game.time.events.remove(loop9);
 
         Fighter.playerDie = true;
         var gameover = Fighter.game.add.image(550, 150, 'gameover');
@@ -353,7 +382,7 @@ var onPlayerGetGift2 = function(playerSprite, giftSprite) {
 	          getExplosion(enemy.x,enemy.y);
 	          enemy.kill();
 	          Fighter.score += 1;
-            Fighter.score1 += 1;
+            Fighter.score2 += 1;
         	}
         });
       }
