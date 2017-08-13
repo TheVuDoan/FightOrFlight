@@ -2,8 +2,8 @@ var howtoplayState = {
   create: function() {
     Fighter.game.stage.backgroundColor = '808080';
     buttonBack = Fighter.game.add.button(20, 800, 'back',howtoplayState.onBackClick, this);
-    buttonBack.height = 150;
-    buttonBack.width = 150;
+    buttonBack.height = 100;
+    buttonBack.width = 100;
     Fighter.game.add.text(600,30, 'HOW TO PLAY',{font: "bold 60px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});
     Fighter.game.add.sprite(50,150,'shieldGift');
     Fighter.game.add.text(110,160, 'Create Shield',{font: "bold 30px Arial", fill: "#000000", boundsAlignH: "center", boundsAlignV: "middle"});

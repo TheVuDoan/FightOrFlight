@@ -22,6 +22,8 @@ var loadState = {
     Fighter.game.load.image('Enemy2','Assets/EnemyType2.png');
     Fighter.game.load.image('Boss','Assets/Boss.png');
     Fighter.game.load.image('BulletBoss','Assets/BossBullet.png');
+    Fighter.game.load.image('BossKiller','Assets/BossKiller.png');
+    Fighter.game.load.image('missile','Assets/missile.png');
 
     Fighter.game.load.image('Mouse','Assets/Mouse.png');
     Fighter.game.load.image('Space','Assets/Space.png');
