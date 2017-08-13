@@ -10,16 +10,16 @@ var menuState = {
     var gameName = Fighter.game.add.sprite(300,50,'name');
     gameName.height = 300;
     gameName.width = 1000;
-    var buttonPlay = Fighter.game.add.button(650, 320, 'play',menuState.onPlayClick, this );
+    var buttonPlay = Fighter.game.add.button(600, 400, 'play',menuState.onPlayClick, this );
     var buttonHowToPlay = Fighter.game.add.button(600, 580, 'howToPlay',menuState.onHowToPlayClick, this );
     var buttonCredit = Fighter.game.add.button(600, 750, 'credit',menuState.onCreditClick, this );
 
-    buttonPlay.height = 250;
-    buttonPlay.width = 250;
+    buttonPlay.height = 150;
+    buttonPlay.width = 350;
     buttonHowToPlay.height = 150;
     buttonHowToPlay.width = 350;
-    buttonCredit.height = 150;
-    buttonCredit.width = 350;
+    buttonCredit.height = 170;
+    buttonCredit.width = 370;
   },
   onPlayClick: function() {
       Fighter.game.state.start('stage1Opening');
