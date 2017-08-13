@@ -13,7 +13,7 @@ class BossController{
               new BulletController(
               this.sprite.x,
               this.sprite.y,
-              'bulletBoss',
+              'BulletBoss',
               {
                 Angle : i
               }

@@ -218,7 +218,7 @@ var play2State = {
         createEnemy2();
 	    }
       //Level up
-      if(Fighter.countTime === 180 && !Fighter.playerDie) {
+      if(Fighter.countTime === 210 && !Fighter.playerDie) {
         Fighter.game.state.start('stage3Opening');
       }
     }

@@ -14,9 +14,9 @@ var playState = {
       Fighter.getItemSound = Fighter.game.add.audio('GetItem');
       Fighter.gameoverSound = Fighter.game.add.audio('Gameover');
       Fighter.soundtrackSound = Fighter.game.add.audio('Soundtrack');
-      Fighter.soundtrackSound.volume -= 110;
+      //Fighter.soundtrackSound.volume -= 110;
 
-      //Fighter.soundtrackSound.play();
+      Fighter.soundtrackSound.play();
 
       // game score
       Fighter.style = { font: "35px Arial", fill: "black", boundsAlignH: "center", boundsAlignV: "middle" };
@@ -240,6 +240,7 @@ var getCollie = function(playerSprite, enemySprite){
         Fighter.explosionSound.play();
         // GAMEOVER
         //Fighter.gameoverSound.play();
+        Fighter.soundtrackSound.stop();
         SPEED = 300;
         Fighter.game.time.events.remove(loop);
         Fighter.game.time.events.remove(loop1);
