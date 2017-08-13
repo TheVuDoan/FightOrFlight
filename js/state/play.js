@@ -193,12 +193,12 @@ var playState = {
         );
 
         if(Fighter.game.time.now > timeEnemy && Fighter.countTime <= 85){
-          timeEnemy = Fighter.game.time.now + 250;
+          timeEnemy = Fighter.game.time.now + 280;
           createEnemy1();
 	       }
 
          //Level up
-         if(Fighter.countTime === 90 && !Fighter.playerDie) {
+         if(Fighter.countTime === 2 && !Fighter.playerDie) {
            Fighter.game.state.start('stage2Opening');
          }
     }
