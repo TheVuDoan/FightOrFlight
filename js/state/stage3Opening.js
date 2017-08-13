@@ -43,8 +43,13 @@ var stage3OpeningState = {
     }, 11000);
     setTimeout(function(){
       if(flag3 === 0) {
+      Fighter.game.add.text(400,550, 'Dont move too fast or you will die...',{font: "bold 33px Courier", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
+      }
+    }, 13000);
+    setTimeout(function(){
+      if(flag3 === 0) {
         Fighter.game.state.start('play3');      }
-    }, 12000);
+    }, 14000);
   },
   onSkipClick: function() {
     flag3 = 1;
