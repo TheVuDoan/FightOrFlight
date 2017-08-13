@@ -1,9 +1,19 @@
-var buttonNext;
+var buttonNext,buttonSkip;
 var stage1OpeningState = {
   create: function() {
     Fighter.game.stage.backgroundColor = '000000';
+    buttonSkip = Fighter.game.add.button(20, 800, 'skip',stage1OpeningState.onSkipClick, this);
+    buttonSkip.height = 150;
+    buttonSkip.width = 280;
+    buttonNext = Fighter.game.add.button(1300, 800, 'next',stage1OpeningState.onNextClick, this);
+    buttonNext.height = 150;
+    buttonNext.width = 280;
+  },
+  onNextClick: function() {
+    buttonSkip.pendingDestroy = true;
+    buttonNext.pendingDestroy = true;
     setTimeout(function(){
-      Fighter.game.add.text(400,300, 'Chapter 1: The Wanderers',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
+      Fighter.game.add.text(400,200, 'Chapter 1: The Wanderers',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
     }, 1000);
     setTimeout(function(){
       Fighter.game.add.text(400,350, 'You see some strange-looking objects moving towards you…',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
@@ -21,12 +31,10 @@ var stage1OpeningState = {
       Fighter.game.add.text(400,550, 'Or bad things will happen…',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
     }, 11000);
     setTimeout(function(){
-      buttonNext = Fighter.game.add.button(1300, 800, 'next',stage1OpeningState.onNextClick, this);
-      buttonNext.height = 150;
-      buttonNext.width = 280;
-    }, 13000);
+      Fighter.game.state.start('play');
+    }, 12000);
   },
-  onNextClick: function() {
+  onSkipClick: function() {
     Fighter.game.state.start('play');
   }
 }

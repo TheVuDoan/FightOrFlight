@@ -28,6 +28,7 @@ var menuState = {
       console.log("onHowToPlayClick");
   },
   onCreditClick: function() {
-    console.log("onCreditClick");
+      //console.log("onCreditClick");
+      Fighter.game.state.start('credit');
   },
 }

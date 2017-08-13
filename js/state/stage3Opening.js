@@ -2,8 +2,16 @@ var buttonNext;
 var stage3OpeningState = {
   create: function() {
     Fighter.game.stage.backgroundColor = '000000';
+    buttonSkip = Fighter.game.add.button(1300, 800, 'skip',stage3OpeningState.onSkipClick, this);
+    buttonSkip.height = 150;
+    buttonSkip.width = 280;
+    buttonNext = Fighter.game.add.button(1300, 800, 'next',stage3OpeningState.onNextClick, this);
+    buttonNext.height = 150;
+    buttonNext.width = 280;
+  },
+  onNextClick: function() {
     setTimeout(function(){
-      Fighter.game.add.text(400,300, 'Chapter 3: The Boss',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
+      Fighter.game.add.text(400,200, 'Chapter 3: The Boss',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
     }, 1000);
     setTimeout(function(){
       Fighter.game.add.text(400,350, 'They are not after you anymore…',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
@@ -21,12 +29,10 @@ var stage3OpeningState = {
       Fighter.game.add.text(400,550, 'That THING in front of you…',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
     }, 11000);
     setTimeout(function(){
-      buttonNext = Fighter.game.add.button(1300, 800, 'next',stage3OpeningState.onNextClick, this);
-      buttonNext.height = 150;
-      buttonNext.width = 280;
-    }, 13000);
+      Fighter.game.state.start('play3');
+    }, 12000);
   },
-  onNextClick: function() {
+  onSkipClick: function() {
     Fighter.game.state.start('play3');
   }
 }

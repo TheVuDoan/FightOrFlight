@@ -1,9 +1,19 @@
-var buttonNext;
+var buttonNext,buttonSkip;
 var stage2OpeningState = {
   create: function() {
     Fighter.game.stage.backgroundColor = '000000';
+    buttonSkip = Fighter.game.add.button(20, 800, 'skip',stage2OpeningState.onSkipClick, this);
+    buttoSkip.height = 150;
+    buttonSkip.width = 280;
+    buttonNext = Fighter.game.add.button(1300, 800, 'next',stage2OpeningState.onNextClick, this);
+    buttonNext.height = 150;
+    buttonNext.width = 280;
+  },
+  onNextClick: function() {
+    buttonSkip.pendingDestroy = true;
+    buttonNext.pendingDestroy = true;
     setTimeout(function(){
-      Fighter.game.add.text(400,300, 'Chapter 2: The Chasers',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
+      Fighter.game.add.text(400,200, 'Chapter 2: The Chasers',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
     }, 1000);
     setTimeout(function(){
       Fighter.game.add.text(400,350, 'You realize that they start to notice you…',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
@@ -24,12 +34,10 @@ var stage2OpeningState = {
       Fighter.game.add.text(400,600, 'Or Flight…',{font: "bold 30px Arial", fill: "#ffffff", boundsAlignH: "center", boundsAlignV: "middle"});
     }, 13000);
     setTimeout(function(){
-      buttonNext = Fighter.game.add.button(1300, 800, 'next',stage2OpeningState.onNextClick, this);
-      buttonNext.height = 150;
-      buttonNext.width = 280;
-    }, 15000);
+      Fighter.game.state.start('play2');
+    }, 14000);
   },
-  onNextClick: function() {
+  onSKipClick: function() {
     Fighter.game.state.start('play2');
   }
 }

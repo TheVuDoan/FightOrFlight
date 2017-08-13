@@ -7,7 +7,9 @@ var loadState = {
     Fighter.game.load.image('play', 'Assets/play.png');
     Fighter.game.load.image('howToPlay', 'Assets/howtoplay.png');
     Fighter.game.load.image('credit', 'Assets/credit.png');
+    Fighter.game.load.image('skip', 'Assets/Skip.png');
     Fighter.game.load.image('next', 'Assets/Next.png');
+    Fighter.game.load.image('back', 'Assets/Back.png');
 
 
     // Load animation explosion, khien

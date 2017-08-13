@@ -1,4 +1,4 @@
-var playState3 = {
+var play3State = {
 	create: function() {
 	   Fighter.game.stage.backgroundColor = '808080';
 	   Fighter.boss = new BossController(
